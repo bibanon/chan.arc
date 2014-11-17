@@ -9,7 +9,9 @@ This format has been created primarily for 4chan threads, but aims to cleanly st
 
 Status of This Document
 -----------------------
-This is very much a draft reference, and is not recommended for production use. Because of the early nature of this draft, the version string is "draft-01", the format of which will likely be changed for release.
+This is an early draft specification, and is **not yet recommended for production use**.
+
+Because of the early nature of this draft, the version string of this specification is ``"draft-01"``. The final format of version strings will likely be changed for release.
 
 Introduction
 ------------
