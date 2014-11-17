@@ -42,13 +42,16 @@ This lays out the standard folder structure of an archived thread. The specific 
 This is a reference example of an archived thread::
 
     /manifest.json
+    /posts.json
     /index.html
-    /images
-        /12345.jpg
-        /23456.gif
     /thumbs
         /12345.jpg
         /23456.jpg
+        /spoiler.jpg
+    /files
+        /12345.jpg
+        /23456.gif
+        /23484.pdf
     /resources
         /css
             /embedded_file_a.css
@@ -77,11 +80,6 @@ A typical ``manifest.json`` file is laid out as such:
         "arc_version": "draft-01",
         "thread": {
             "title": "Thread Title",
-            "op": {
-                "name": "Some Guy",
-                "email": "a@example.com",
-                "tripcode": "#coolDuD3"
-            },
             "sticky": true
         },
         "created": {
@@ -111,22 +109,6 @@ This contains information about the thread. These should be generated at archive
 * ``title``
 
     This contains the title of the given thread. It is a string, containing any characters necessary.
-
-* ``op``
-
-    This contains information about the posted who created the thread. These may be excluded if the information does not exist or cannot be extracted, but this is not recommended. The subkeys are detailed below.
-
-    * ``name``
-
-        This key contains what is in the ``name`` field of the topic post of the thread. This is a string, and can contain any characters the original site supports in its name field.
-
-    * ``email``
-
-        This key contains what is in the ``email`` field of the topic post of the thread. This is a string, and can contain any characters the original site supports in its name field. It is important to note that this may contain a string that is not a valid email address. This is by design, as some sites let users post with this in their email field.
-
-    * ``tripcode``
-
-        This key contains what the ``tripcode`` of the topic post of the thread is displayed as. This may contain a standard tripcode or a secure tripcode, depending on what is supported by the base site and what the post contains. This is a string that can contain any characters necessary to represent the generated tripcode, but is expected to conform to standard tripcode formats. Leading and trailing whitespace should be stripped from this field.
 
 * ``sticky``
 
@@ -169,17 +151,115 @@ This lists the site the thread was archived from, as well as the time and date o
     This is a unix timestamp representing the given time. This is primarily a machine-readable representation, and is recommended to be in Coordinated Universal Time (UTC).
 
 
+posts.json
+^^^^^^^^^^
+This lists the posts that have been made in the thread.
+
+A typical ``posts.json`` file is laid out as such:
+
+.. code:: json
+
+    {
+        "op": {
+            "name": "Some Guy",
+            "email": "a@example.com",
+            "tripcode": "#coolDuD3",
+            "thumb": "spoiler.jpg",
+            "file": "1234567.jpg"
+            "post_id": 1234567,
+            "content": "Does anyone else enjoy imageboard archiving?"
+        },
+        "replies": [
+            {
+                "name": "Anonymous",
+                "post_id": 1234568,
+                "content": "No, go away"
+            },
+            {
+                "name": "Anonymous",
+                "post_id": 1234583,
+                "thumb": "spoiler.jpg",
+                "file": "1234583.jpg",
+                "content": "Oh cool, another archivist! >>1234568 is just lame"
+            },
+            {
+                "name": "Anonymous",
+                "post_id": 1234624,
+                "thumb": "mediatype-pdf.jpg",
+                "file": "paper.pdf",
+                "content": "Look at this cool paper on archiving!"
+            },
+            {
+                "name": "Anonymous",
+                "post_id": 142,
+                "supplier": "archive.moe",
+                "content": "This is a nice old thread!"
+            }
+        ]
+    }
+
+* ``op``
+
+    This contains a post object containing information about the post that created the thread. These may be excluded if the information does not exist or cannot be extracted, but this is not recommended. The subkeys are detailed below.
+
+* ``replies``
+
+    This contains a list of post objects, in sequential order from the earliest reply to the latest reply, representing what was posted in the thread.
+
+A post object can contain the following keys:
+
+    * ``name``
+
+        This key contains what is in the ``name`` field of the topic post of the thread. This is a string, and can contain any characters the original site supports in its name field.
+
+    * ``email``
+
+        This key contains what is in the ``email`` field of the topic post of the thread. This is a string, and can contain any characters the original site supports in its name field. It is important to note that this may contain a string that is not a valid email address. This is by design, as some sites let users post with this in their email field.
+
+    * ``tripcode``
+
+        This key contains what the ``tripcode`` of the topic post of the thread is displayed as. This may contain a standard tripcode or a secure tripcode, depending on what is supported by the base site and what the post contains. This is a string that can contain any characters necessary to represent the generated tripcode, but is expected to conform to standard tripcode formats. Leading and trailing whitespace should be stripped from this field.
+
+    * ``post_id``
+
+        This key contains the identifier given to this post by the source image board. This may be board or imageboard-specific, depending on how the source imageboard specifies its psot IDs. This is expected to contain an integer, but if a string is necessary to represent the specific board's style of post IDs, that is also allowed.
+
+    * ``thumb``
+
+        This key contains the filename of the thumbnail attached to this post. This is the name the thumb will be found under in the ``thumbs/`` folder.
+
+    * ``file``
+
+        This key contains the filename of the file attached to this post. This is the name the file will be found under in the ``files/`` folder.
+
+    * ``supplier``
+
+        Some imageboard archives allow posting on their archived versions of threads, after the thread has been deleted from the source imageboard. For instance, after archiving a thread on ``archive.example``, that website may allow its users to post on the threads they have archived. This is often called 'ghost mode' or names similar.
+
+        If a post has been added by a provider that is not the original source of the thread, this key shall contain the ``site`` identifier of where the post originated. (Site identifiers are specified above, in the ``manifest.json`` section)
+
+    * ``content``
+
+        This key contains the content of this post. This is what the user has typed in to create this, in HTML format.
+
+
 index.html
 ^^^^^^^^^^
 This is a purely human-readable file. It is created at archive time, and is essentially a download of the thread HTML with resource URLs (pointing towards the original site) replaced with ones pointing towards our created ``/resources/`` folder instead. If this is not possible to due the nature of the site, this should be created at archive time from something like a template – anything that lets users double-click this file and browse the thread from the archive folder.
 
-images/
-^^^^^^^
-This folder contains the original images posted in the thread. This folder may be excluded, but this is not recommended as it takes value away from the archive. Images in this folder will be named from the post ID followed by the file extension of the image.
+files/
+^^^^^^
+This folder contains the original files posted in the thread (on most imageboards, these are images). This folder may be excluded, but this is not recommended as it takes value away from the archive. Files in this folder will be named from the post ID followed by the file extension of the image, unless they are special files as described below.
+
+If there are special post files, an example being board or imageboard-specific spoiler files that are linked in the thread, they may be named ``spoiler.ext``, ``spoiler-something.ext``, or whatever best represents the file. They must be put these in this folder if a post object in ``posts.json`` will refer to these in their ``image`` key.
+
+Keep in mind that the files attached to posts are not restricted to image content. Some image boards let users attach files of other formats such as ``webm``, ``pdf``, ``mp3`` to their posts, and these may exist in this folder as well.
 
 thumbs/
 ^^^^^^^
 This folder contains the original thumbnails posted in the thread. This folder must be included if possible. Images in this folder will be named by the post ID followed by the file extension of the image.
+
+However, if there are special thumbnails, such as board or imageboard-specific spoiler thumbs that are linked in the thread, they may be named ``spoiler.ext``, ``spoiler-something.ext``, or whatever best represents the file. They must be put these in this folder if a post object in ``posts.json`` will refer to these in their ``thumb`` key.
 
 resources/
 ^^^^^^^^^^
