@@ -74,6 +74,8 @@ manifest.json
 ^^^^^^^^^^^^^
 The manifest file describes the metadata associated with the given image board thread. It includes a variety of details related to when the thread was created, archived, the site/board it was originally on and where it was archived from.
 
+As this file is designed to hold human-readable information, this file should be 'pretty-printed'. That is to say, it should be formatted in a human-readable way, similar to the example shown below. While recommended, this is not required.
+
 A typical ``manifest.json`` file is laid out as such:
 
 .. code:: json
@@ -167,7 +169,7 @@ A typical ``posts.json`` file is laid out as such:
             "email": "a@example.com",
             "tripcode": "#coolDuD3",
             "thumb": "spoiler.jpg",
-            "file": "1234567.jpg"
+            "file": "1234567.jpg",
             "post_id": 1234567,
             "content": "Does anyone else enjoy imageboard archiving?"
         },
