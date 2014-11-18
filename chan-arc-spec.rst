@@ -121,7 +121,12 @@ A typical ``manifest.json`` file is laid out as such:
 .. code:: json
 
     {
-        "arc_version": "draft-01",
+        "version": "0.1-draft",
+        "board": {
+            "id": "etc",
+            "name": "Cool Guys Here!",
+            "banner": "banner_etc.jpg"
+        }
         "thread": {
             "title": "Thread Title",
             "sticky": true
@@ -140,11 +145,25 @@ A typical ``manifest.json`` file is laid out as such:
         }
     }
 
-**arc_version**
+**version**
 
-This key lists the version of the ``chan.arc`` format that this archive conforms to. Right now, this version string is ``draft-01``, where ``01`` will be incremented for newer version of this chan archive draft.
+This key lists the version of the ``chan.arc`` format that this archive conforms to, as listed above.
 
-The final format of this string is not yet decided, but will be closer to the final release of this specification.
+**board**
+
+This contains information about the board this thread was posted to. This should be generated at archive time.
+
+* ``id``
+
+    This is the id of the current board, which is normally the "url slug" of the given board. This key must be written.
+
+* ``name``
+
+    This is the long-form human-readable name of the board. On most imageboards, this is listed at the top. This key is optional, but is recommended as it can provide very valuable historical insight.
+
+* ``banner``
+
+    This is the filename of an image under ``resources/``, which is the banner at the top of the page at archive time. This is shown at the top of most image boards. This key is not required, but is recommended.
 
 **thread**
 

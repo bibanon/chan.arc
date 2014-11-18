@@ -11,7 +11,7 @@ URI Scheme Syntax
 -----------------
 The syntax of ``chan`` URIs are detailed below in ABNF `(RFC5234) <http://www.ietf.org/rfc/rfc5234.txt>`_::
 
-    uri = "chan://" supplier_ids "/" board_names "/" thread_idd [ "?" query ] [ "#" post_id ]
+    uri = "chan:" supplier_ids "/" board_names "/" thread_idd [ "?" query ] [ "#" post_id ]
 
     supplier_ids = supplier_id * [ "-" supplier_id]
     supplier_id = 1 * SAFE_CHARS
@@ -36,8 +36,8 @@ The syntax of ``chan`` URIs are detailed below in ABNF `(RFC5234) <http://www.ie
 
 Examples::
     
-    chan://4chan/etc/1234123#1234345
-    chan://8chan/etc/7654345?ts=1396310400#7654567
+    chan:4chan/etc/1234123#1234345
+    chan:8chan/etc/7654345?ts=1396310400#7654567
 
 Supplier ID
 ^^^^^^^^^^^
@@ -74,9 +74,3 @@ Multiple thread IDs should not be required, but it is impossible to tell when/if
 Post ID
 ^^^^^^^
 This is the ID of a specific post within the thread. When viewing a thread and this exists, the viewing application should 'snap' down to the given post. Examples of this occur on most image boards, and is where the inspiration for this URI section came from.
-
-Supplier ID Registry
---------------------
-A registry of Supplier IDs (used in the URI as above) is to be maintained, both to prevent collisions in the namespace and to be able to provide useful information for applications implementing and using the ``chan`` URI (particularly the ``chan.arc`` specification).
-
-**unfinished**
