@@ -247,7 +247,7 @@ A typical ``posts.json`` file is laid out as such:
                 "post_id": 1234583,
                 "thumb": "spoiler.jpg",
                 "file": "1234583.jpg",
-                "content": "Oh cool, another archivist! >>1234568 is just lame"
+                "content": "Oh cool, another archivist!<br><greentext>&gt;&gt;1234568 is just lame</greentext>"
             },
             {
                 "name": "Anonymous",
