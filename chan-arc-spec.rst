@@ -11,7 +11,7 @@ Status of This Document
 -----------------------
 This is an early draft specification, and is **not yet recommended for production use**.
 
-Because of the early nature of this draft, the version string of this specification is ``"draft-01"``. The final format of version strings will likely be changed for release.
+Because of the early nature of this draft, the version string of this specification is ``"0.1-draft"``.
 
 Introduction
 ------------
@@ -22,6 +22,46 @@ Many completely seperate methods of archiving image board threads have been deve
 With this format, we hope to create a standard way to store image board threads so that we can be able to, say, import threads from a bunch of different archives into a single, unified display and management system.
 
 To start off with, we will be describing a standard manifest of thread information and a standard folder structure for archives. We do, however, want to also describe a standard way to store the topic and reply posts as well as any other information required to recreate the page from a basic template, further on.
+
+Version Strings
+---------------
+Versions of the ``chan.arc`` specification are strings, specified as such in ABNF `(RFC5234) <http://www.ietf.org/rfc/rfc5234.txt>`_::
+
+    version_string = version [ "-" status ]
+    version = major "." minor
+    major = NUMBER
+    minor = NUMBER
+    status = "draft" | "alpha" | "beta" | "pre"
+
+    NUMBER = 1 * DIGIT
+
+Major and Minor
+^^^^^^^^^^^^^^^
+The ``version`` at the front of ``version_string`` above refers to the major and minor versions of the chan-arc and Supplier ID Registry specifications.
+
+Both specifications are based around JSON files for interchanging information, and they shall follow the constraints below:
+
+* If keys are only added to the existing JSON information files, then the minor version number shall be incremented.
+
+* If more major changes are made (such as new JSON information files, changing the meaning of keys, renaming or deleting keys) to either the JSON files or the file/folder layout structure of the ``chan.arc`` archive, the major number version shall be incremented.
+
+The reasoning for such is this: If I have a chan.arc reader that natively supports ``"1.0"``, and it opens a file of version ``"1.2"``, it should be able to find all the keys it expects and be able to parse and read information from the new chan.arc file with relative parity compared to ones of the old ``"1.0"`` format.
+
+Status
+^^^^^^
+
+* "draft" status means the specification is in extreme flux, and may change entirely. At this point, it is recommended to contribute and to read the specification, but not to implement code based on it.
+
+* "alpha" and "beta" are simply various stages of development and a sign that development focus is shifting from implementing and speccing out new features to focusing on what's already made it in. One of these stages may be skipped if it is deemed acceptable to skip ahead to preliminary testing, but it is recommended to spend at least a week at each stage if possible. At this stage, library authors may start playing with implementations, but things will likely still change.
+
+* "pre" refers to a preliminary release of the standard. This is a (hopefully) entirely finished specification to let the library authors and other parties both prepare for the full release, and point out any bugs that have gotten overlooked or deficiencies that have yet to be corrected.
+
+At the point of a preliminary release, library authors are recommended to try implementing the specification and to provide feedback. If enough feedback is given and it is deemed necessary, the specification may be sent back to any of the prior stages.
+
+As an example, for version "1.2", the drafting process is expected to result in the following version strings before, during development, and for the final release::
+
+    "1.2-draft"  ->  "1.2-alpha"  ->  "1.2-beta"  ->  "1.2-pre"  ->  "1.2"
+    ->  "1.3-draft"  ->  ...
 
 Compression
 -----------
@@ -304,8 +344,3 @@ This folder is for storing files which may be of use and importance, but are not
 **List of files officially available under the raw/ directory**
 
 * ``api.json`` (4chan)
-
-
-Unfinished
-==========
-This specification is still in heavy development. There are many other things we need to store, and other pieces of information we need to generate for these to be extremely useful.
