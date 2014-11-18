@@ -130,7 +130,7 @@ A typical ``manifest.json`` file is laid out as such:
             "id": "etc",
             "name": "Cool Guys Here!",
             "banner": "banner_etc.jpg"
-        }
+        },
         "thread": {
             "title": "Thread Title",
             "sticky": true
