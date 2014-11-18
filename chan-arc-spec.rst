@@ -358,7 +358,9 @@ If the ``index.html`` file is a 'grab' directly from the image board with URLs r
 
 warc/
 ^^^^^
-This folder is for storing files in the Web ARChive file format. These files may take any file name deemed appropriate, depending on how the archiver downloads and stores these files. Storing WARC files allow external archives such as the `Wayback Machine <http://archive.org/web/>`_ to import thread information and allow users to browse the thread exactly as it existed at archive time. This directory and storing WARC files is recommended, but not required.
+This folder is for storing files in the Web ARChive file format. These files may take any file name deemed appropriate, depending on how the archiver downloads and stores these files. Storing WARC files allow external archives such as the `Wayback Machine <http://archive.org/web/>`_ to import thread information and allow users to browse the thread exactly as it existed at archive time. It is recommended to download and store ``.warc`` grabs of the thread HTML directly from the source, as well as any images and other page resource files that are linked on that page, if possible.
+
+This directory and storing WARC files is recommended, but not required.
 
 raw/
 ^^^^
