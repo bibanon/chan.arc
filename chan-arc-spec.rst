@@ -1,6 +1,10 @@
 .chan.arc File Format
 =====================
 
+Unfinished Spec
+^^^^^^^^^^^^^^^
+This specification is in ``draft`` status and **is by no means final**. It is still being written and drafted. Please expect things to change, as per the Version Strings section in the ``chan.arc`` specs.
+
 Abstract
 --------
 This document specifies the ``chan.arc`` file extension. This format is designed to provide a simple, standard way to represent and transport archives of imageboard threads.
