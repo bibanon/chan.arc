@@ -59,7 +59,7 @@ There are several standard query keys, as specified below
 
 Board Names
 ^^^^^^^^^^^
-This is fairly standard. In 99% of cases, there will only be a single board name. However, the option for multiple board names exists if, for instance, a thread was moved from its original board by the administration of the original supplier.
+This is fairly standard. In almost all cases, there will only be a single board name. However, the option for multiple board names exists if, for instance, a thread was moved from its original board by the administration of the original supplier.
 
 Note that this refers to the boards the thread was on at the __original__ supplier. This is where the thread originated. The board names of later archives and suppliers are disregarded (I have yet to see a third-party supplier try to move threads into their own special board names anyway. Every single one I've seen just leaves it as-is).
 
