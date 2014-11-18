@@ -1,18 +1,18 @@
-chan.arc File Format
-====================
+``chan.arc`` File Format and ``chan`` URI
+=========================================
 Imageboard thread archives come in a multitude of different formats: Plain WARC files, Fuuka database dumps, and most tools output their own unique format. This disjoined nature of the backup formats makes it difficult to transport thread dumps from one supplier to another, and even more difficult if you're looking to work with a bunch of different thread archives.
 
 This is an attempt to standardize a file format that can be used to archive and store threads from all sorts of image boards. This should make it easier to create a tool that backs up threads, meaning we don't need to redo the same work of creating a format for our specific tool to use.
 
 It may also become a specification for sharing threads between people. For instance, if you want to show someone a thread, you can just send them a ``.chan.arc`` of the thread and they'll have the whole thing ready to read!
 
-The draft specification is available at `chan-arc-spec.rst <chan-arc-spec.rst>`_.
+The draft specifications are available under `chan-arc-spec.rst <chan-arc-spec.rst>`_ and `chan-uri-spec.rst <chan-uri-spec.rst>`_.
 
-NOTE: **[ This specification is still in heavy development, we do not recommend using this yet ]**
+NOTE: **[ These specifications is still in heavy development, and we do not recommend using this yet ]**
 
 Contact
 -------
-If you want talk with us, our primary IRC channel is ``#bibanon`` on `Rizon.net <http://www.rizon.net/chat>`_.
+If you want talk with us, our primary IRC channel is ``#bibanon`` on `Rizon.net <http://www.rizon.net/chat>`_, and ``danneh_`` is the primary author.
 
 Come and say hello, we're always interested in talking to other people about this spec. After all, that's how we find all of the current problems and create a good and useful standard for everyone!
 
