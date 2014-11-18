@@ -4,15 +4,21 @@ Imageboard thread archives come in a multitude of different formats: Plain WARC 
 
 This is an attempt to standardize a file format that can be used to archive and store threads from all sorts of image boards. This should make it easier to create a tool that backs up threads, meaning we don't need to redo the same work of creating a format for our specific tool to use.
 
-It may also become a specification for sharing threads between people. For instance, if you want to show someone a thread, you can just send them a ``.chan.arc`` of the thread and they'll have the whole thing ready to read!
+It may also become a specification for sharing threads between people. For instance, if you want to show someone a thread, you can just send them a ``.chan.arc`` archive of the thread and they'll have the whole thing ready to read!
 
-The draft specifications are available under `chan-arc-spec.rst <chan-arc-spec.rst>`_ and `chan-uri-spec.rst <chan-uri-spec.rst>`_.
+This project has grown into several related specifications, which are required due to the nature of imageboard archiving. These are listed below:
 
-NOTE: **[ These specifications is still in heavy development, and we do not recommend using this yet ]**
+* ``chan.arc`` Draft Specification: `chan-arc-spec.rst <chan-arc-spec.rst>`_
+* ``chan`` URI Specification: `chan-uri-spec.rst <chan-uri-spec.rst>`_
+* Supplier ID Registry Specification: `supplier-id-registry.rst <supplier-id-registry.rst>`_
+
+**[ These specifications are still in heavy development, and we do not recommend using this yet ]**
+
+**[ However, we would love to talk with any interested parties about these developments, below ]**
 
 Contact
 -------
-If you want talk with us, our primary IRC channel is ``#bibanon`` on `Rizon.net <http://www.rizon.net/chat>`_, and ``danneh_`` is the primary author.
+If you want talk with us, our primary IRC channel is ``#bibanon`` on `Rizon.net <http://www.rizon.net/chat>`_, and ``danneh_`` is the primary author. He can also be reached `via email <mailto:daniel@danieloaks.net>`_.
 
 Come and say hello, we're always interested in talking to other people about this spec. After all, that's how we find all of the current problems and create a good and useful standard for everyone!
 
