@@ -244,7 +244,25 @@ A post object can contain the following keys:
 
     * ``content``
 
-        This key contains the content of this post. This is what the user has typed in to create this, in HTML format.
+        This key contains the content of this post in HTML format.
+
+        Inter-board and links to other imageboards' threads are very transient – most of them not having a specified lifetime. The links to other threads on the same or on different image boards shall have their ``href`` attribute replaced with a ``chan:`` URI representing the same content. For instance, if a link in content originally points to ``http://boards.4chan.org/etc/thread/123234/something#263543``, it shall be replaced with the standardised ``chan://4chan/etc/123234#263543``. These are rewritten to valid URLs on creation of the ``index.html``. For exact specifications, please see the `chan URI Specification <chan-uri-spec.rst>`_.
+
+        Because of the disjointed nature of the way imageboards implement things like greentext, spoilers, and URLs, there are some standard replacements that must be made below. This is to provide conformance between different imageboard post content, and so that we can affect posts from all imageboards with one single CSS style.
+
+        * Italics/Bold
+
+            All tags that make the content text inside them italics/bold shall be replaced with the tags ``<emph></emph>`` and ``<strong></strong>`` respectively. If there is a tag that does both (such as a custom ``span`` tag), it shall be replaced with ``<emph><strong>`` and be closed with ``</strong></emph>``.
+
+        * Greentext
+
+            "Greentext", or text that is coloured green and generally starts the line with the character ``">"``, shall be represented with the tag ``<greentext></greentext>``. If there is a custom element (one that is not the ``<greentext>`` tag) whose style is to make the text inside the tag display as green, it shall be replaced with this tag.
+
+        * Spoilered Text
+
+            Spoilered text is text whose background and foreground both appear black. When they are hovered over, the text turns lighter and shows what the message says. These spoilers can be nested. The standard tag to represent this is ``<spoiler></spoiler>``. If there is a custom element (one that is not the ``<spoiler>`` tag) whose style is to make the text inside the tag show as a spoiler, it shall be replaced with this tag.
+
+
 
 
 index.html
