@@ -53,4 +53,4 @@ Imageboard ID Registry
 ----------------------
 A registry of Imageboard IDs (used in the URI as above) is to be maintained, both to prevent collisions in the namespace and to be able to provide useful information for applications implementing and using the ``chan`` URI (particularly the ``chan.arc`` specification).
 
-** unfinished **
+**unfinished**
