@@ -3,7 +3,7 @@
 
 Abstract
 --------
-This document specifies the ``.chan.arc`` file extension. This format is designed to provide a simple, standard way to represent and transport archives of imageboard threads.
+This document specifies the ``chan.arc`` file extension. This format is designed to provide a simple, standard way to represent and transport archives of imageboard threads.
 
 This format has been created primarily for 4chan threads, but aims to cleanly store threads from other decently compatible image boards (as well as from other imageboard archives themselves).
 
@@ -240,7 +240,7 @@ A post object can contain the following keys:
 
         Some imageboard archives allow posting on their archived versions of threads, after the thread has been deleted from the source imageboard. For instance, after archiving a thread on ``archive.example``, that website may allow its users to post on the threads they have archived. This is often called 'ghost mode' or names similar.
 
-        If a post has been added by a provider that is not the original source of the thread, this key shall contain the ``site`` identifier of where the post originated. (Site identifiers are specified above, in the ``manifest.json`` section)
+        If a post has been added on/by a provider that is not the original source of the thread, this key shall contain the ``site`` identifier of where the post originated. (Site identifiers are specified above, in the ``manifest.json`` section)
 
     * ``content``
 

@@ -8,6 +8,12 @@ It may also become a specification for sharing threads between people. For insta
 
 The draft specification is available at `chan-arc-spec.rst <chan-arc-spec.rst>`_. **[ This specification is still in development ]**
 
+Contact
+-------
+If you want talk with us, our primary IRC channel is ``#bibanon`` on `Rizon.net <http://www.rizon.net/chat>`_.
+
+Come and say hello, we're always interested in talking to other people about this specification. After all, that's how we find all of the current problems and get a wide group of people working towards creating a good and useful standard!
+
 License
 -------
 The specification itself, as well as any reference code or libraries hosted here, are released under the WTFPL::
