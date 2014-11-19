@@ -36,9 +36,9 @@ As a special case, draft, alpha, beta and preliminary standard files will be rem
 
     http://chanarc.org/registry/1.4-pre/registry.json
 
-However, this address is expected to be unavailable shortly after the release of the full ``1.4`` specification.
+However, this address is expected to be unavailable shortly after the release of the final ``1.4`` specification.
 
-Trying to retrieve files that are unavailable should return a 404 response, in which case the application may try incrementing the minor version number of the standard and try again (As releases with incremented minor numbers mean that keys have only been added, and and removed or changed significantly).
+Trying to retrieve files that are unavailable should return a 404 response, in which case the application may incrementing the minor version number of the standard and try again (As releases with incremented minor numbers mean that keys have only been added, and not and removed or changed significantly).
 
 We reserve the right to change the domain name here (``chanarc.org``) in the future, should it be required.
 
@@ -46,7 +46,7 @@ We reserve the right to change the domain name here (``chanarc.org``) in the fut
 ------------------------
 This file aims to provide as much useful information as possible to help when users of the ``chan.arc`` specification, the ``chan`` URI, and hopefully other people who use imageboards.
 
-First, an registry.json file with several example suppliers:
+First, a registry.json file with several example suppliers:
 
 .. code:: json
 
