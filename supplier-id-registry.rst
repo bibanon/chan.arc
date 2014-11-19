@@ -54,10 +54,28 @@ First, an registry.json file with several example suppliers:
         "version": "0.1-draft",
         "suppliers": {
             "4chan": {
+                "name": "4chan",
+                "description": "4chan is a simple image-based bulletin board where anyone can post comments and share images",
+                "is_online": true,
 
+                "capture": "(?:boards\.)?4chan.org/(?P<board>[a-z0-9]+)/(?:res|thread)/(?P<thread_id>[0-9]+)(?:/[a-z0-9\-]+/?)?(?:#p(?P<post_id>[0-9]+))?",
+                "current": "http://boards.4chan.org/(?P=board)/thread/(?P=thread_id)(?P=post_id_part)",
+                "post_id_part": "p(?P=post_id)"
             },
             "archive.moe": {
+                "name": "archive.moe",
+                "description": "Site that utilizes open-source software to archive 4chan content",
+                "is_online": true,
 
+                "archives": {
+                    "4chan": {
+                        "capture": "https://archive.moe/(?P<board>[a-z0-9]+)/thread/(?P<thread_id>[0-9]+)(?:/#(?P<post_id>[0-9]+))?",
+                        "current": "https://archive.moe/(?P=board)/thread/(?P=thread_id)/(?P=post_id_part)",
+                        "post_id_part": "#(?P=post_id)"
+
+                        "boards": ["a", "biz", "c", "co", "diy", "gd", "h", "i", "int", "jp", "k", "m", "mlp", "out", "po", "q", "r9k", "s4s", "sci", "sp", "tg", "tv", "u", "v", "vg", "vp", "vr", "wsg"],
+                    }
+                }
             }
         }
     }
