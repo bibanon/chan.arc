@@ -4,7 +4,9 @@ Imageboard thread archives come in a multitude of different formats: Plain WARC 
 
 This is an attempt to standardize a file format that can be used to archive and store threads from all sorts of image boards. This should make it easier to create a tool that backs up threads, meaning we don't need to redo the same work of creating a format for our specific tool to use.
 
-It may also become a specification for sharing threads between people. For instance, if you want to show someone a thread, you can just send them a ``.chan.arc`` archive of the thread and they'll have the whole thing ready to read!
+It could also hopefully mean that even if you only use a program on your home computer to archive an imageboard thread, it can be imported and also used by some of the bigger archives without any issues, since the file will have all the information they need!
+
+It could also become a specification for sharing threads between people. For instance, if you want to show someone a thread, you can just send them a ``.chan.arc`` archive of the thread and they'll have the whole thing ready to read!
 
 This project has grown into several related specifications, which are required due to the nature of imageboard archiving. These are listed below:
 
