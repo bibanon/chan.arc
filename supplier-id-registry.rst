@@ -11,6 +11,8 @@ This document specifies the format of a ``Supplier ID Registry``. This is requir
 
 These supplier IDs have been created due to the transient nature of image board culture, and the need to provide useful information for all sorts of suppliers on the internet.
 
+One of the primary purposes of this registry is to let chan.arc libraries scan imageboard threads for links to imageboards, let them replace those links with ``chan`` URI links in the ``chan.arc`` archive JSON data files, and then to let them convert those URLs back to the original, or pointing towards archived versions of, those original threads and posts.
+
 Format
 ------
 The Supplier ID Registry consists of JSON file, one called ``registry.json`` and the other called ``historical.json``. ``registry.json`` provides information to allow rewriting ``chan`` URIs into valid HTTP URIs, if possible. It also provides the status of suppliers, existing archives, and other sorts of information to make it easy for applications using ``chan.arc`` and the various standards around that format.
