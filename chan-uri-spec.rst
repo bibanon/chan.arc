@@ -15,33 +15,35 @@ URI Scheme Syntax
 -----------------
 The syntax of ``chan`` URIs are detailed below in ABNF `(RFC5234) <http://www.ietf.org/rfc/rfc5234.txt>`_::
 
-    uri = "chan:" supplier_ids "/" board_names "/" thread_idd [ "?" query ] [ "#" post_id ]
+    uri = "chan:" supplier_ids "/" board_names "/" thread_ids [ "?" query ] [ "#" post_id ]
 
     supplier_ids = supplier_id * [ "-" supplier_id]
-    supplier_id = 1 * SAFE_CHARS
+    supplier_id = 1 * SAFE_CHAR
 
     board_names = board_name * [ "-" board_name ]
-    board_name = 1 * ALPHA_LOWER | DIGIT | ENCODED_CHAR
+    board_name = 1 * SAFE_OR_ENCODED_CHAR
 
     query = qu * [ ";" qu ]
     qu = key [ "=" value ]
-    key = ALPHA_LOWER
-    value = SAFE_CHARS
+    key = 1 * ALPHA_LOWER | "_"
+    value = 1 * SAFE_OR_ENCODED_CHAR
 
     thread_ids = thread_id * [ "-" thread_id ]
     thread_id = 1 * DIGIT
     post_id = 1 * DIGIT
 
-    SAFE_CHARS = ALPHA_LOWER | DIGIT | "."
+    SAFE_OR_ENCODED_CHAR = SAFE_CHAR | ENCODED_CHAR
+    SAFE_CHAR = ALPHA_LOWER | DIGIT | "."
     ENCODED_CHAR = "%" 1 * HEXDIG ";"
-        ; encoded to represent characters we cannot represent in the given character range
-        ; this is the UTF-8 hex value of the given character
+        ; this represents a character that cannot be represented in our SAFE_CHAR range
+        ; this is the hex value of the character's UTF-8 code
     ALPHA_LOWER = %x61-7a
 
 Examples::
     
     chan:4chan/etc/1234123#1234345
     chan:8chan/etc/7654345?ts=1396310400#7654567
+    chan:4chan-archive.moe/etc/8765456#9876567
 
 Supplier ID
 ^^^^^^^^^^^

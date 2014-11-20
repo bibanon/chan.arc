@@ -58,6 +58,7 @@ First, a registry.json file with several example suppliers:
                 "name": "4chan",
                 "description": "4chan is a simple image-based bulletin board where anyone can post comments and share images",
                 "is_online": true,
+                "volatile_post_ids": false,
 
                 "capture": "(?:boards\\.)?4chan\\.org/(?P<board>[a-z0-9]+)/(?:res|thread)/(?P<thread_id>[0-9]+)(?:/[a-z0-9\-]+/?)?(?:#p(?P<post_id>[0-9]+))?",
                 "current": "http://boards\\.4chan\\.org/(?P=board)/thread/(?P=thread_id)(?P=post_id_part)",
