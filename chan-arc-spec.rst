@@ -328,6 +328,10 @@ A post object can contain the following keys:
 
             Spoilered text is text whose background and foreground both appear black. When they are hovered over, the text turns lighter and shows what the message says. These spoilers can be nested. The standard tag to represent this is ``<spoiler></spoiler>``. If there is a custom element (one that is not the ``<spoiler>`` tag) whose style is to make the text inside the tag show as a spoiler, it shall be replaced with this tag.
 
+        * Internal post links
+
+            Links to other posts in the same thread (usually shown/performed as something like ``>>123123``) should be in the following HTML format: ``<a class="chan-quote-link" href="#p123234">&gt;&gt;123234</a>``, with the shown class name and href content as ``"p`` followed by the post ID, closed by ``"``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``<greentext>`` tag.
+
 
 files/
 ^^^^^^
