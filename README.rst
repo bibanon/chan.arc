@@ -12,6 +12,8 @@ For example, most of the archives created by tools on users' computers end up un
 
 If we have a standard format that can usefully define all this for us, we should be able to seamlessly transfer thread information between different archives, give tools that want to analyse and look at imageboard threads a standard format to be able to parse and look through, and give users a format that lets them store the thread content, as well as all the metadata surrounding it for the future!
 
+Also, I think this is fairly important historical data (or at least, could be). It'd be nice to have a standard format we can use and look back on in some years' time, and won't just be lost or unimportable if we can't run the software anymore or if a database layout changes.
+
 This project has grown into several related specifications, which are required due to the nature of imageboard archiving. These are listed below:
 
 * ``chan.arc`` Draft Specification: `chan-arc-spec.rst <chan-arc-spec.rst>`_
