@@ -48,13 +48,12 @@ We reserve the right to change the domain name here (``chanarc.org``) in the fut
 ------------------------
 This file aims to provide as much useful information as possible to help when users of the ``chan.arc`` specification, the ``chan`` URI, and hopefully other people who use imageboards.
 
-First, a registry.json file with several example suppliers:
+Here is a registry.json file with several example suppliers:
 
 .. code:: json
 
     {
         "version": "0.1-draft",
-        "last_updated": 1396310400,
         "suppliers": {
             "4chan": {
                 "name": "4chan",
@@ -64,7 +63,7 @@ First, a registry.json file with several example suppliers:
 
                 "capture": "(?:boards\\.)?4chan\\.org/(?P<board>[a-z0-9]+)/(?:res|thread)/(?P<thread_id>[0-9]+)(?:/[a-z0-9\-]+/?)?(?:#p(?P<post_id>[0-9]+))?",
                 "current": "http://boards\\.4chan\\.org/(?P=board)/thread/(?P=thread_id)(?P=post_id_part)",
-                "post_id_part": "p(?P=post_id)"
+                "post_id_part": "#p(?P=post_id)"
             },
             "archive.moe": {
                 "name": "archive.moe",
@@ -83,3 +82,7 @@ First, a registry.json file with several example suppliers:
             }
         }
     }
+
+* ``version``
+
+    This simply specifies the version of the specification this registry file complies with, as described above in the _Version Numbers_ section.
