@@ -2,11 +2,15 @@
 =========================================
 Imageboard thread archives come in a multitude of different formats: Plain WARC files, Fuuka database dumps, and most tools output their own unique format. This disjoined nature of the backup formats makes it difficult to transport thread dumps from one supplier to another, and even more difficult if you're looking to work with a bunch of different thread archives.
 
-This is an attempt to standardize a file format that can be used to archive and store threads from all sorts of image boards. This should make it easier to create a tool that backs up threads, meaning we don't need to redo the same work of creating a format for our specific tool to use.
+This is an attempt to standardize a file format that can be used to archive and store threads from image boards. This should make it easier to create tools that create, import, export, and analyse thread archives.
 
-It could also hopefully mean that even if you only use a program on your home computer to archive an imageboard thread, it can be imported and also used by some of the bigger archives without any issues, since the file will have all the information they need!
+Why a new standard?
+-------------------
+So we can all be talking the same language!
 
-It could also become a specification for sharing threads between people. For instance, if you want to show someone a thread, you can just send them a ``.chan.arc`` archive of the thread and they'll have the whole thing ready to read!
+For example, most of the archives created by tools on users' computers end up unused (and relatively not too useful) beyond that user's hard drive because they can't go anywhere. Sure, you can post them on your website, throw them up on Github Pages or on somewhere like `Archive.org <https://archive.org/>`_, but they can't be imported into the other major thread archive sites. They also miss out on some useful information since their primary focus is just getting it to display when you double-click the HTML file.
+
+If we have a standard format that can usefully define all this for us, we should be able to seamlessly transfer thread information between different archives, give tools that want to analyse and look at imageboard threads a standard format to be able to parse and look through, and give users a format that lets them store the thread content, as well as all the metadata surrounding it for the future!
 
 This project has grown into several related specifications, which are required due to the nature of imageboard archiving. These are listed below:
 
@@ -14,9 +18,9 @@ This project has grown into several related specifications, which are required d
 * ``chan`` URI Specification: `chan-uri-spec.rst <chan-uri-spec.rst>`_
 * Supplier ID Registry Specification: `supplier-id-registry.rst <supplier-id-registry.rst>`_
 
-**[ These specifications are still in heavy development, and we do not recommend using this yet ]**
+**These specifications are still in heavy development, and we do not recommend using this yet**
 
-**[ However, we would love to talk with any interested parties about these developments, below ]**
+**However, we would love to talk with any interested parties about these developments**
 
 Contact
 -------
