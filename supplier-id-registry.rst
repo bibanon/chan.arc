@@ -48,6 +48,8 @@ We reserve the right to change the domain name here (``chanarc.org``) in the fut
 ------------------------
 This file aims to provide as much useful information as possible to help when users of the ``chan.arc`` specification, the ``chan`` URI, and hopefully other people who use imageboards.
 
+This file shall be in UTF-8 encoding, with no BOM.
+
 Here is a registry.json file with several example suppliers:
 
 .. code:: json

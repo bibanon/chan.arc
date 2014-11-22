@@ -25,7 +25,7 @@ The syntax of ``chan`` URIs are detailed below in ABNF `(RFC5234) <http://www.ie
 
     query = qu * [ ";" qu ]
     qu = key [ "=" value ]
-    key = 1 * ALPHA_LOWER | "_"
+    key = ALPHA_LOWER  * ALPHA_LOWER | DIGIT | "_"
     value = 1 * SAFE_OR_ENCODED_CHAR
 
     thread_ids = thread_id * [ "-" thread_id ]
@@ -67,15 +67,13 @@ Board Names
 ^^^^^^^^^^^
 This is fairly standard. In almost all cases, there will only be a single board name. However, the option for multiple board names exists if, for instance, a thread was moved from its original board by the administration of the original supplier.
 
-Note that this refers to the boards the thread was on at the __original__ supplier. This is where the thread originated. The board names of later archives and suppliers are disregarded (I have yet to see a third-party supplier try to move threads into their own special board names anyway. Every single one I've seen just leaves it as-is).
+Note that this refers to the boards the thread was on at the __original__ supplier. This is where the thread originated. If the board 'appears' under a different id than the original supplier at a third-party archive, this can be handled in the Supplier ID registry.
 
 Thread ID
 ^^^^^^^^^
 This is the ID the source supplier used to identify the thread. For every image board I've seen, this is the ID of the originating post of the thread, though this is not a hard constraint.
 
-The possibility for multiple thread IDs is linked to the multiple board names above. It is designed to handle the contingency of a thread that has been moved to a new board by the administration, and on the new board the thread's ID has changed from its original one.
-
-Multiple thread IDs should not be required, but it is impossible to tell when/if someone will write a nonstandard imageboard implementation that does these things, so we have it here just in case.
+The possibility for multiple thread IDs is linked to the multiple board names above. It is designed to handle the contingency of a thread that has been moved to a new board by the administration, and on the new board the thread's ID has changed from its original one to a new value.
 
 Post ID
 ^^^^^^^

@@ -25,7 +25,7 @@ Many completely seperate methods of archiving image board threads have been deve
 
 With this format, we hope to create a standard way to store image board threads so that we can be able to, say, import threads from a bunch of different archives into a single, unified display and management system.
 
-The most important thing to store, in our eyes, is the user-generated content – what the users have themselves posted inside threads. The specific stylings and layout of the specific imageboard itself are less important, which is why our standard information files focus on the content and posts themselves, and not the page layout, structure, or theme/design. However, if an example of these can be downloaded and stored as a ``WARC`` file in the ``warc/`` folder, this is always appreciated.
+The most important thing to store, in our eyes, is the user-generated content – what the users have themselves posted inside threads. The specific stylings and layout of the specific imageboard itself are less important, which is why our standard (required) information files place more focus on the content and posts themselves than the page layout, structure, or theme/design of the specific imageboard. However, direct grabs of these files can be downloaded and stored in ``WARC`` files in the provided ``warc/`` folder.
 
 Version Strings
 ---------------
@@ -49,6 +49,8 @@ Both specifications are based around JSON files for interchanging information, a
 
 * If more major changes are made (such as new JSON information files, changing the meaning of keys, renaming or deleting keys) to either the JSON files or the file/folder layout structure of the ``chan.arc`` archive, the major number version shall be incremented.
 
+* For the ``0.x`` versions, each minor version number should be assumed to have major changes and breakages (eg: some of the JSON keys that existed in ``0.2`` may not exist in ``0.3``. This is to be able to rapidly introduce new features and get a decent set of features worked out before a 'production' release. When this standard reaches a sufficient level of stability, the major version number will be upgraded from 0 to 1, and the rules above will apply.
+
 The reasoning for such is this: If I have a chan.arc reader that natively supports ``"1.0"``, and it opens a file of version ``"1.2"``, it should be able to find all the keys it expects and be able to parse and read information from the new chan.arc file with relative parity compared to ones of the old ``"1.0"`` format.
 
 Status
@@ -56,7 +58,7 @@ Status
 
 * "draft" status means the specification is in extreme flux, and may change entirely. At this point, it is recommended to contribute and to read the specification, but not to implement code based on it.
 
-* "alpha" and "beta" are simply various stages of development and a sign that development focus is shifting from implementing and speccing out new features to focusing on what's already made it in. One of these stages may be skipped if it is deemed acceptable to skip ahead to preliminary testing, but it is recommended to spend at least a week at each stage if possible. At this stage, library authors may start playing with implementations, but things will likely still change.
+* "alpha" and "beta" are simply various stages of development and a sign that development focus is shifting from implementing and speccing out new features to focusing on what's already made it in. One or both of these stages may be skipped if it is deemed acceptable, but it is recommended to spend at least a week at each stage if possible to allow for proper feedback. At this stage, library authors may start trying to update their implementations, but features may still change at this point.
 
 * "pre" refers to a preliminary release of the standard. This is a (hopefully) entirely finished specification to let the library authors and other parties both prepare for the full release, and point out any bugs that have gotten overlooked or deficiencies that have yet to be corrected.
 
@@ -69,17 +71,17 @@ As an example, for version "1.2", the drafting process is expected to result in 
 
 Compression
 -----------
-The ``.arc`` part of the standard name refers to some form of archive compression. The two standard forms of ``.chan.arc`` compression are listed below:
+The ``.arc`` part of the standard name refers to a compression format. The two standard forms of compression used with ``.chan.arc`` are listed below:
 
 * ``7zip``
 
-    This format refers to 7zip, a very good open source compression format. Due to the high level of compression of this format, this is the recommended way to compress ``chan.arc`` archives. Archives compressed with this format should have the file extension ``chan.7z``.
+    This format refers to 7zip, a very efficient open source compression format. Due to the high level of compression of this format, this is the recommended way to compress ``chan.arc`` archives. Archives compressed with this format shall have the file extension ``chan.7z``.
 
 * ``zip``
 
-    This format refers to PKZIP, the standard archive format for Windows-based systems. While this format has not proven itself the absolute best for compression's sake, there is a large ecosystem of tools and libraries already familiar with this format, and it is quite simple to decompress and extract files from this. Archives compressed with this format should have the file extension ``chan.zip``.
+    This format refers to PKZIP, the standard compression format for Windows-based systems. While this format has not proven itself the absolute best for compression's sake, there is a large ecosystem of tools and libraries already familiar with this format, and it is quite simple to decompress and extract files from this. Archives compressed with this format shall have the file extension ``chan.zip``.
 
-Other archive formats may be used, but this is not recommended.
+Other compression formats may be used if required, but this is not recommended as most software will not be able to open them.
 
 Folder and File Structure
 -------------------------
@@ -121,6 +123,8 @@ manifest.json
 ^^^^^^^^^^^^^
 The manifest file describes the metadata associated with the given image board thread. It includes a variety of details related to when the thread was created, archived, the site/board it was originally on and where it was archived from.
 
+This file shall be in UTF-8 encoding, with no BOM.
+
 As this file is designed to hold human-readable information, this file should be 'pretty-printed'. That is to say, it should be formatted in a human-readable way, similar to the example shown below. While recommended, this is not required.
 
 A typical ``manifest.json`` file is laid out as such:
@@ -129,25 +133,22 @@ A typical ``manifest.json`` file is laid out as such:
 
     {
         "version": "0.1-draft",
-        "board": {
-            "id": "etc",
-            "name": "Cool Guys Here!",
-            "banner": "banner_etc.jpg"
-        },
         "thread": {
             "title": "Thread Title",
             "sticky": true
         },
         "created": {
             "site": "4chan",
-            "board": "etc",
+            "banner": "banner_etc.jpg",
+            "board": {
+                "id": "etc",
+                "name": "Cool Guys Here!"
+            },
             "thread_id": 123123,
-            "datetime": "2014-03-12 21:42:06",
             "timestamp": 49732497592874,
         },
         "archived": {
             "site": "archive.moe",
-            "datetime": "2014-05-17 14:24:53",
             "timestamp": 9867378547236,
         }
     }
@@ -225,6 +226,8 @@ posts.json
 ^^^^^^^^^^
 This lists the posts that have been made in the thread.
 
+This file shall be in UTF-8 encoding, with no BOM.
+
 A typical ``posts.json`` file is laid out as such:
 
 .. code:: json
@@ -250,7 +253,8 @@ A typical ``posts.json`` file is laid out as such:
                 "post_id": 1234583,
                 "thumb": "spoiler.jpg",
                 "file": "1234583.jpg",
-                "content": "Oh cool, another archivist!<br><greentext>&gt;&gt;1234568 is just lame</greentext>"
+                "content": "Oh cool, another archivist!<br><greentext>&gt;&gt;1234568 is just lame</greentext>",
+                "references": [1234568],
             },
             {
                 "name": "Anonymous",
@@ -258,6 +262,12 @@ A typical ``posts.json`` file is laid out as such:
                 "thumb": "mediatype-pdf.jpg",
                 "file": "paper.pdf",
                 "content": "Look at this cool paper on archiving!"
+            },
+            {
+                "name": "CoolDude",
+                "post_id": 1234626,
+                "poster_type": "owner",
+                "content": "Yay"
             },
             {
                 "name": "Anonymous",
@@ -292,15 +302,21 @@ A post object can contain the following keys:
 
     * ``post_id``
 
-        This key contains the identifier given to this post by the source image board. This may be board or imageboard-specific, depending on how the source imageboard specifies its psot IDs. This is expected to contain an integer, but if a string is necessary to represent the specific board's style of post IDs, that is also allowed.
+        This key contains the identifier given to this post by the source image board. This may or may not be board-specific, depending on how the source imageboard specifies its post IDs.
 
     * ``thumb``
 
-        This key contains the filename of the thumbnail attached to this post. This is the name the thumb will be found under in the ``thumbs/`` folder.
+        This key contains the filename of the thumbnail attached to this post. This is the name the thumb will be found under in the ``thumbs/`` folder. This may also contain a list of filenames, which are to corrospond to the list of filenames in the ``file`` key, if the imageboard supports uploading multiple files with a single post.
 
     * ``file``
 
-        This key contains the filename of the file attached to this post. This is the name the file will be found under in the ``files/`` folder.
+        This key contains the filename of the file attached to this post. This is the name the file will be found under in the ``files/`` folder. This may also contain a list of filenames, which are to corrospond to the list of thumbnails in the ``thumbs`` key, if the imageboard supports uploading multiple files with a single post.
+
+    * ``poster_type``
+
+        This refers to whether the user shows as a special person on the board. Generally, this is displayed with a small icon, a differently-coloured name, or something similar.
+
+        The allowed values for this key are: ``["owner", "developer, "admin", "moderator", "janitor"]``.
 
     * ``supplier``
 
@@ -310,7 +326,7 @@ A post object can contain the following keys:
 
     * ``content``
 
-        This key contains the content of this post in HTML format.
+        This key contains the content of this post in HTML format. This key is required.
 
         Inter-board and links to other imageboards' threads are very transient – most of them not having a specified lifetime. The links to other threads on the same or on different image boards shall have their ``href`` attribute replaced with a ``chan:`` URI representing the same content. For instance, if a link in content originally points to ``http://boards.4chan.org/etc/thread/123234/something#263543``, it shall be replaced with the standardised ``chan://4chan/etc/123234#263543``. These are rewritten to valid URLs on creation of the ``index.html``. For exact specifications, please see the `chan URI Specification <chan-uri-spec.rst>`_.
 
@@ -328,14 +344,25 @@ A post object can contain the following keys:
 
             Spoilered text is text whose background and foreground both appear black. When they are hovered over, the text turns lighter and shows what the message says. These spoilers can be nested. The standard tag to represent this is ``<spoiler></spoiler>``. If there is a custom element (one that is not the ``<spoiler>`` tag) whose style is to make the text inside the tag show as a spoiler, it shall be replaced with this tag.
 
+        * Ban Messages
+
+            Ban messages generally appear as all-red, bold, and sometimes in a slightly bigger font than the rest of the text. The typical message that appears as 'ban' text is as such: ``"(USER WAS BANNED FOR THIS POST)"``.
+
+            These messages shall be inside the tag ``<banned></banned>``. Any existing tags (span/div) to display ban text as such shall be replaced with this standard tag.
+
         * Internal post links
 
             Links to other posts in the same thread (usually shown/performed as something like ``>>123123``) should be in the following HTML format: ``<a class="chan-quote-link" href="#p123234">&gt;&gt;123234</a>``, with the shown class name and href content as ``"p`` followed by the post ID, closed by ``"``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``<greentext>`` tag.
 
+    * ``references``
+
+        This shows which other posts this post references. This is normally captured as an internal ``>>123234`` style link in the content.
 
 files/
 ^^^^^^
-This folder contains the original files posted in the thread (on most imageboards, these are images). This folder may be excluded, but this is not recommended as it takes value away from the archive. Files in this folder will be named from the post ID followed by the file extension of the image, unless they are special files as described below.
+This folder contains the original files posted in the thread (on most imageboards, these are images). This folder may be excluded, but this is not recommended as it reduces the archive's value.
+
+Files in this folder will be named from the post ID followed by the file extension of the image, or of the form ``postid-filenumber.ext`` if there are multiple files attached to a single post, unless they are special files as described below.
 
 If there are special post files, an example being board or imageboard-specific spoiler files that are linked in the thread, they may be named ``spoiler.ext``, ``spoiler-something.ext``, or whatever best represents the file. They must be put these in this folder if a post object in ``posts.json`` will refer to these in their ``image`` key.
 
@@ -343,7 +370,9 @@ Keep in mind that the files attached to posts are not restricted to image conten
 
 thumbs/
 ^^^^^^^
-This folder contains the original thumbnails posted in the thread. This folder must be included if possible. Images in this folder will be named by the post ID followed by the file extension of the image.
+This folder contains the original thumbnails posted in the thread. This folder must be included if possible.
+
+Images in this folder will be named by the post ID followed by the file extension of the image, or of the form ``postid-filenumber.ext`` if there are multiple files attached to a single post, unless they are special files as described below.
 
 However, if there are special thumbnails, such as board or imageboard-specific spoiler thumbs that are linked in the thread, they may be named ``spoiler.ext``, ``spoiler-something.ext``, or whatever best represents the file. They must be put these in this folder if a post object in ``posts.json`` will refer to these in their ``thumb`` key.
 
@@ -365,9 +394,7 @@ If the ``index.html`` file is a 'grab' directly from the image board with URLs r
 
 warc/
 ^^^^^
-This folder is for storing files in the Web ARChive file format. These files may take any file name deemed appropriate, depending on how the archiver downloads and stores these files. Storing WARC files allow external archives such as the `Wayback Machine <http://archive.org/web/>`_ to import thread information and allow users to browse the thread exactly as it existed at archive time. It is recommended to download and store ``.warc`` grabs of the thread HTML directly from the source, as well as any images and other page resource files that are linked on that page, if possible.
-
-This directory and storing WARC files is recommended, but not required.
+This folder is for storing files in the Web ARChive file format. These files may take any file name deemed appropriate, depending on how the archiver downloads and stores these files. Storing WARC files allow external archives such as the `Wayback Machine <http://archive.org/web/>`_ to import thread information and allow users to browse the thread exactly as it existed at archive time. Users may download and store ``.warc`` grabs of the thread HTML directly from the source, as well as other resources that are linked on that page.
 
 raw/
 ^^^^
@@ -376,3 +403,11 @@ This folder is for storing files which may be of use and importance, but are not
 **List of files officially available under the raw/ directory**
 
 * ``api.json`` (4chan)
+
+Assumptions Made
+----------------
+Whenever creating a format like this, assumptions must be made. If these are invalidated in the future, core sections of the standard may need to be updated or reworked.
+
+* Post IDs and Thread IDs will always be integers.
+
+    I haven't yet seen an imageboard that uses something other than integers for post and thread IDs. I consider it a fairly core part of being an imageboard. If this is invalidated, the ``chan`` URI specification will also need to be updated
