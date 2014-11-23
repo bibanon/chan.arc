@@ -23,7 +23,9 @@ Image boards have proved themselves important parts in the creation of internet 
 
 Many completely seperate methods of archiving image board threads have been developed, from a user simply going to "Save Page" in their browser to complex scripts and programs designed for backing up content. Because each of these is independently developed, there has not been a standard way to browse or to transfer thread backups from one system to another.
 
-With this format, we hope to create a standard way to store image board threads so that we can be able to, say, import threads from a bunch of different archives into a single, unified display and management system.
+With ``chan.arc``, we hope to create a standard way to store and archive image board thread content. With a standard format, we hope to be able to seamlessly transfer thread information between different archives, give tools that want to analyse and look at imageboard threads a standard format to be able to parse and look through, and give users a filetype that lets them store the thread content and the metadata surrounding it for the future!
+
+Because of the historical importance of this data, we should have a standard format we can use and look back on in some years' time. Something that won't just be lost or unimportable if we can't setup and run the archival software anymore or if a database layout changes.
 
 The most important thing to store, in our eyes, is the user-generated content – what the users have themselves posted inside threads. The specific stylings and layout of the specific imageboard itself are less important, which is why our standard (required) information files place more focus on the content and posts themselves than the page layout, structure, or theme/design of the specific imageboard. However, direct grabs of these files can be downloaded and stored in ``WARC`` files in the provided ``warc/`` folder.
 
