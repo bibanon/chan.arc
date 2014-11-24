@@ -30,6 +30,11 @@ If you want talk with us, our primary IRC channel is ``#bibanon`` on `Rizon.net 
 
 Come and say hello, we're always interested in talking to other people about this spec. After all, that's how we find all of the current problems and create a good and useful standard for everyone!
 
+
+Thanks
+------
+Thanks to Adm|nymous for giving advice and helping get the standard more in-step with the information Fuuka grabs and requires.
+
 License
 -------
 The specification itself, as well as any reference code or libraries hosted here, are released under the WTFPL::

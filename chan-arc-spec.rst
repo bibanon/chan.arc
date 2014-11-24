@@ -91,25 +91,32 @@ This lays out the standard folder structure of an archived thread. The specific 
 
 This is a reference example of an archived thread::
 
-    /manifest.json
-    /posts.json
+    /thread.json
     /thumbs
         /12345.jpg
         /23456.jpg
-        /spoiler.jpg
+        /spoiler-etc.jpg
+        /filetype-mp3.jpg
     /files
         /12345.jpg
         /23456.gif
-        /23484.pdf
+        /23484.webm
+        /23484.mp3
 
     /index.html
+    /template
+        /template.css
+        /template.js
+        /template.png
+
     /resources
+        /banner_etc.jpg
+        /favicon.png
+        /index.html
         /css
             /embedded_file_a.css
             /embedded_file_b.css
         /embedded_file.js
-        /favicon.png
-
     /warc
         warc_01.warc.gz
         warc_01.cdx
@@ -118,40 +125,140 @@ This is a reference example of an archived thread::
         raw_file_a.ext
         raw_file_b.ext
 
-The ``resources`` directory is optional, but should be included where the index.html links to external resources on the image board's website.
 
-
-manifest.json
-^^^^^^^^^^^^^
-The manifest file describes the metadata associated with the given image board thread. It includes a variety of details related to when the thread was created, archived, the site/board it was originally on and where it was archived from.
+thread.json
+^^^^^^^^^^^
+This file stores and describes the thread information including metadata, posts, files – everything we want to store. It includes a variety of details including the thread ID, sticky/locked, site banner, information about where the thread was started and where it was archived from.
 
 This file shall be in UTF-8 encoding, with no BOM.
 
 As this file is designed to hold human-readable information, this file should be 'pretty-printed'. That is to say, it should be formatted in a human-readable way, similar to the example shown below. While recommended, this is not required.
 
-A typical ``manifest.json`` file is laid out as such:
+A typical ``thread.json`` file is laid out as such:
 
 .. code:: json
 
     {
         "version": "0.1-draft",
+        "software": "BASC-Archiver",
+        "timestamp": 9867378547236,
         "thread": {
-            "title": "Thread Title",
-            "sticky": true
+            "id": 1234234,
+            "subject": "Thread Title",
+            "sticky": false,
+            "locked": false
         },
-        "created": {
-            "site": "4chan",
-            "banner": "banner_etc.jpg",
-            "board": {
-                "id": "etc",
-                "name": "Cool Guys Here!"
+        "source": [
+            {
+                "site": "4chan",
+                "banner": "banner_etc.jpg",
+                "board": {
+                    "id": "etc",
+                    "name": "Cool Guys Here!"
+                }
             },
-            "thread_id": 123123,
-            "timestamp": 49732497592874,
-        },
-        "archived": {
-            "site": "archive.moe",
-            "timestamp": 9867378547236,
+            {
+                "site": "archive.moe",
+                "software": "FoolFuuka",
+                "timestamp": 1234567890
+            }
+        ],
+        "posts": {
+            "op": {
+                "post_id": 1234234,
+                "timestamp": 1398264918,
+                "subject": "Thread Title",
+                "poster": {
+                    "type": "administrator",
+                    "name": "Some Guy",
+                    "email": "a@example.com",
+                    "tripcode": "#coolDuD3",
+                    "hash": "Nbm21HN4",
+                    "country": "AU"
+                },
+                "file": [
+                    {
+                        "original_name": "good-guy.webm",
+                        "path": "1234234.webm",
+                        "image": { "w": 0, "h": 0 },
+                        "hash": "?????????????????",
+                        "duration": 1232,
+                        "spoiler": true,
+                        "thumb_path": "spoiler-etc.jpg",
+                        "thumb": { "w": 0, "h": 0 }
+                    }
+                ]
+                "content": "Does anyone else enjoy imageboard archiving?"
+            },
+            "replies": [
+                {
+                    "post_id": 1234568,
+                    "timestamp": 1398264918,
+                    "poster": {
+                        "name": "Anonymous",
+                        "hash": "0fSGrhH4"
+                    },
+                    "content": "No, go away"
+                },
+                {
+                    "post_id": 1234583,
+                    "timestamp": 1398264918,
+                    "poster": {
+                        "name": "Anonymous",
+                        "hash": "SHDGr24D"
+                    },
+                    "file": [
+                        {
+                            "original_name": "really_cool.gif",
+                            "path": "1234583.gif",
+                            "image": { "w": 0, "h": 0 },
+                            "hash": "?????????????????",
+                            "thumb_path": "1234583.jpg",
+                            "thumb": { "w": 0, "h": 0 }
+                        }
+                    ]
+                    "content": "Oh cool, another archivist!\n[green][post=1234568]>>1234568[\post] is just lame[/green]",
+                    "references": [1234568]
+                },
+                {
+                    "post_id": 1234624,
+                    "poster": {
+                        "name": "Anonymous",
+                        "hash": "92feDBtW"
+                    },
+                    "file": [
+                        {
+                            "original_name": "cool_paper.pdf",
+                            "path": "1234624.pdf",
+                            "hash": "?????????????????",
+                            "thumb_path": "type-pdf.jpg",
+                            "thumb": { "w": 0, "h": 0 }
+                        }
+                    ]
+                    "file": "paper.pdf",
+                    "content": "Look at this cool paper on archiving!\n[green][url=chan:4chan/etc/2534321]>>>2534321[/url] is also cool![/green]"
+                    "deleted": true,
+                },
+                {
+                    "post_id": 1234626,
+                    "poster": {
+                        "type": "moderator"
+                        "name": "CoolDude",
+                        "hash": "902gSgbY"
+                    },
+                    "content": "Yay, people are using my imageboard!"
+                },
+                {
+                    "post_id": 142,
+                    "supplier": "archive.moe",
+                    "poster": {
+                        "type": "ghost"
+                        "name": "Anonymous",
+                        "hash": "g3rTsvrS"
+                    },
+                    "content": "Look, I'm a ghost! Also, this is a nice old thread!"
+                }
+            ]
         }
     }
 
@@ -159,126 +266,96 @@ A typical ``manifest.json`` file is laid out as such:
 
 This key lists the version of the ``chan.arc`` format that this archive conforms to, as listed above.
 
-**board**
+**software**
 
-This contains information about the board this thread was posted to. This should be generated at archive time.
+This key lists the software that created this ``chan.arc`` archive. If the software has a version identifier, it is to be attached to the end of this value with a space and then the version.
 
-* ``id``
+**timestamp**
 
-    This is the id of the current board, which is normally the "url slug" of the given board. This key must be written.
-
-* ``name``
-
-    This is the long-form human-readable name of the board. On most imageboards, this is listed at the top. This key is optional, but is recommended as it can provide very valuable historical insight.
-
-* ``banner``
-
-    This is the filename of an image under ``resources/``, which is the banner at the top of the page at archive time. This is shown at the top of most image boards. This key is not required, but is recommended.
+This is a unix timestamp representing the time of archival. This is a machine-readable representation, and is recommended to be in Coordinated Universal Time (UTC).
 
 **thread**
 
 This contains information about the thread. These should be generated at archive time. Subkeys may be excluded if the information does not or cannot be extracted at archive time. This key itself may be excluded if there are no subkeys.
 
-* ``title``
+    * ``id``
 
-    This contains the title of the given thread. It is a string, containing any characters necessary.
+        This is the ID of the given thread.
 
-* ``sticky``
+    * ``subject``
 
-    This boolean represents whether the post is a 'sticky' post. That is, whether the site management has 'stuck' it to the top of the image board. It may contain the value ``true`` or ``false``, and is generated at archive time.
+        This contains the subject of the OP post. It is a string, containing any characters necessary.
 
-**created**
+    * ``sticky``
 
-This lists the site the thread was created on, the board the thread was created on, the thread's ID and the datetime it was created.
+        This boolean represents whether the thread is a 'sticky'. That is, whether the site management has kept it stuck to the top of the image board. It may contain the values ``true`` or ``false``, and is generated at archive time.
 
-**archived**
+    * ``locked``
 
-This lists the site the thread was archived from, as well as the time and date of archival. This key is primarily for archiving threads from other imageboard archival websites. For instance, ``archive.moe``, ``4archive``, and ``4chandata``. If the thread has been archived from a third-party service, the ``site`` key must be different from the ``site`` key in **created**
+        This boolean represents whether the thread is 'locked'. That is, whether the thread has been forced to accept no new replies. It may contain the values ``true`` or ``false``, and is generated at archive time.
 
-**created/archived keys**
+**source**
 
-* ``site``
+This contains a list of sources where the thread has been, and has been downloaded from.
 
-    This is a simplified representation of the site name and should be fairly easy to guess for most sites. This is usually the part of the domain name before the TLD. As an example, ``4chan.org`` becomes ``4chan``. However, this may be whatever best represents the given site.
+The first source will be the site the thread was created on. It lists the board the thread was created on, the thread's ID and a timestamp of it was created.
 
-    In another example, the archival website ``archive.moe``'s site key would be ``archive.moe``, since a shortening cannot properly represent the site name. It may contain numbers, lowercase letters, dots, dashes, and underscores. It may not contain spaces or any other character not mentioned.
+Any other sources will be other archives the thread was downloaded to and archived from. That is, archives where the thread was read from the previous source, imported into that archive's backend, and then a ``chan.arc`` file was created from that archive's backend data, rather than from the original source directly.
 
-* ``board``
+**Initial Source**
 
-    This represents the 'board' the thread was archived from. For instance, ``/tg/`` would be represented as ``tg``, ``/g/`` would be represented as ``g``. This is usually the url slug the board occupies. The first and last slashes are recommended to be removed from this.
+The initial source has the following special keys, which are not applied for later sources.
 
-    If an image board implements recursive sub-boards or other similar features, this is recommended to be represented with slashes in the board name, such as ``tch/cmp``. However, if the board does support slashes within board names, this should be represented as a list such as ``['tch/cmp', 'g']``.
+    ``board``
 
-    This may contain any characters necessary to represent the board, but is recommended to be lowercase letters, numbers, and dashes and underscores if required.
+    This contains information about the board this thread was posted to. This should be generated at archive time.
 
-* ``thread_id``
+    * ``id``
 
-    This is the id of the thread. Generally, this is the id of the topic post (OP), or the first post of the thread. This is an integer.
+        This is the id of the current board, which is normally the "url slug" of the given board. This key must be written.
 
-* ``datetime``
+    * ``name``
 
-    This is a human-readable representation of the given time, taking the format ``YYYY-MM-DD hh:mm:ss``. This is recommended to be in Coordinated Universal Time (UTC).
+        This is the long-form human-readable name of the board. On most imageboards, this is listed at the top. This key is optional, but is recommended as it can provide very valuable historical insight.
 
-* ``timestamp``
+    * ``banner``
 
-    This is a unix timestamp representing the given time. This is primarily a machine-readable representation, and is recommended to be in Coordinated Universal Time (UTC).
+        This is the filename of an image under ``resources/``, which is the banner at the top of the page at archive time. This is shown at the top of most image boards. This key is recommended.
+
+**Follow-on Sources**
+
+    * ``timestamp``
+
+    This is a unix timestamp representing the time the source archived this thread from the previous supplier. This is a machine-readable representation, and is recommended to be in Coordinated Universal Time (UTC). This key is optional, if the timestamp is not available.
+
+**Standard Source Keys**
+
+    * ``site``
+
+        This is a Supplier ID, as specified in the `Supplier ID Registry <supplier-id-registry.rst>`_, representing the original source or an archive.
+
+    * ``board``
+
+        This represents the 'board' the thread was archived from. For instance, ``/tg/`` would be represented as ``tg``, ``/g/`` would be represented as ``g``. This is usually the url slug the board occupies. The first and last slashes are recommended to be removed from this.
+
+        If an image board implements recursive sub-boards or other similar features, this is recommended to be represented with slashes in the board name, such as ``tch/cmp``. However, if the board does support slashes within board names, this should be represented as a list such as ``['tch/cmp', 'g']``.
+
+        This may contain any characters necessary to represent the board, but is recommended to be lowercase letters, numbers, and dashes and underscores if required.
+
+    * ``thread_id``
+
+        This is the id of the thread. Generally, this is the id of the topic post (OP), or the first post of the thread. This is an integer.
+
+    * ``software``
+
+        This identifies the software running on each supplier. This may be the imageboard software itself, on the initial source, or software such as Fuuka or FoolFuuka on follow-on suppliers. This key is optional.
 
 
-posts.json
-^^^^^^^^^^
-This lists the posts that have been made in the thread.
+**posts**
 
-This file shall be in UTF-8 encoding, with no BOM.
+This key represents the posts in the archived thread. We create this file because HTML formats change continuiously, and if we force future archives to read the downloaded thread HTML directly they will need to read a million different formats. It's much easier for the archival application to extract this machine-readable information at archive time, rather than putting the raw HTML file in and forcing future applications to parse it.
 
-A typical ``posts.json`` file is laid out as such:
-
-.. code:: json
-
-    {
-        "op": {
-            "name": "Some Guy",
-            "email": "a@example.com",
-            "tripcode": "#coolDuD3",
-            "thumb": "spoiler.jpg",
-            "file": "1234567.jpg",
-            "post_id": 1234567,
-            "content": "Does anyone else enjoy imageboard archiving?"
-        },
-        "replies": [
-            {
-                "name": "Anonymous",
-                "post_id": 1234568,
-                "content": "No, go away"
-            },
-            {
-                "name": "Anonymous",
-                "post_id": 1234583,
-                "thumb": "spoiler.jpg",
-                "file": "1234583.jpg",
-                "content": "Oh cool, another archivist!<br><greentext>&gt;&gt;1234568 is just lame</greentext>",
-                "references": [1234568],
-            },
-            {
-                "name": "Anonymous",
-                "post_id": 1234624,
-                "thumb": "mediatype-pdf.jpg",
-                "file": "paper.pdf",
-                "content": "Look at this cool paper on archiving!"
-            },
-            {
-                "name": "CoolDude",
-                "post_id": 1234626,
-                "poster_type": "owner",
-                "content": "Yay"
-            },
-            {
-                "name": "Anonymous",
-                "post_id": 142,
-                "supplier": "archive.moe",
-                "content": "This is a nice old thread!"
-            }
-        ]
-    }
+We try to obtain as much information as we can during archiving, because this is how the thread will be represented to future applications.
 
 * ``op``
 
@@ -290,35 +367,87 @@ A typical ``posts.json`` file is laid out as such:
 
 A post object can contain the following keys:
 
-    * ``name``
+    * ``poster``
 
-        This key contains what is in the ``name`` field of the topic post of the thread. This is a string, and can contain any characters the original site supports in its name field.
+        This contains information about who made the post.
 
-    * ``email``
+        * ``name``
 
-        This key contains what is in the ``email`` field of the topic post of the thread. This is a string, and can contain any characters the original site supports in its name field. It is important to note that this may contain a string that is not a valid email address. This is by design, as some sites let users post with this in their email field.
+            This key contains the name of the poster, sans any tripcode.
 
-    * ``tripcode``
+        * ``email``
 
-        This key contains what the ``tripcode`` of the topic post of the thread is displayed as. This may contain a standard tripcode or a secure tripcode, depending on what is supported by the base site and what the post contains. This is a string that can contain any characters necessary to represent the generated tripcode, but is expected to conform to standard tripcode formats. Leading and trailing whitespace should be stripped from this field.
+            This key contains what is in the ``email`` field of this post. This is a string and can contain any characters the original site supports in its name field. It is important to note that this may contain a string that is not a valid email address. This is by design, as some sites let users post with this in their email field.
+
+            This key is optional and not required if the poster has not set an email.
+
+        * ``type``
+
+            This is a 'type' or a privilidge the poster has. The default allowed values for this string are as follows: ``["owner", "developer", "administrator", "moderator", "janitor", "ghost"]``.
+
+            Owner, Admin, Mod, and Janitor are fairly self-evident, mostly coming from the 4chan moderation system. Other values can be put into this key, but they will not be understood by most software and it is recommended to try and add them to the specification as an 'official' allowed value.
+
+            Ghost represents that the given post has been added at a later supplier, and is not part of the thread from the original supplier.
+
+            This key is optional, if the poster has no special types to declare.
+
+        * ``tripcode``
+
+            This key contains what the ``tripcode`` of the topic post of the thread is displayed as. This may contain a standard tripcode or a secure tripcode, depending on what is supported by the original supplier and what the post contains. This is a string that can contain any characters necessary to represent the generated tripcode, but is expected to conform to standard tripcode formats. Leading and trailing whitespace should be stripped from this field.
+
+            This key is optional, if the poster has no tripcode.
+
+        * ``hash``
+
+            This refers to imageboards that assign a specific hash-like ID to posters, usually based off their IP address or some other defining feature. This allows users to generally see who has made duplicate posts in a thread.
+
+            This key is optional, and can contain any characters the original supplier supports.
+
+        * ``country``
+
+            Some imageboards allow users to declare themselves from a certain country, which puts a small flag next to their name.
 
     * ``post_id``
 
         This key contains the identifier given to this post by the source image board. This may or may not be board-specific, depending on how the source imageboard specifies its post IDs.
 
-    * ``thumb``
-
-        This key contains the filename of the thumbnail attached to this post. This is the name the thumb will be found under in the ``thumbs/`` folder. This may also contain a list of filenames, which are to corrospond to the list of filenames in the ``file`` key, if the imageboard supports uploading multiple files with a single post.
-
     * ``file``
 
-        This key contains the filename of the file attached to this post. This is the name the file will be found under in the ``files/`` folder. This may also contain a list of filenames, which are to corrospond to the list of thumbnails in the ``thumbs`` key, if the imageboard supports uploading multiple files with a single post.
+        This key contains a list of files attached to this post. It is a list because some imageboards support attaching multiple files to a single post. The keys in a 'file object' are listed below:
 
-    * ``poster_type``
+        * ``original_name``
 
-        This refers to whether the user shows as a special person on the board. Generally, this is displayed with a small icon, a differently-coloured name, or something similar.
+            This key contains the original name of the file, as reported by the imageboard. Note that the actual file itself in the ``files/`` directory should not be named this. This key is optional, if not known at archive time or if the imageboard does not support original names.
 
-        The allowed values for this key are: ``["owner", "developer, "admin", "moderator", "janitor"]``.
+        * ``path``
+
+            This key contains the actual path of the image file, in the ``files/`` directory.
+
+        * ``hash``
+
+            Some imageboards also supply a 'hash' of the file. This key is optional, and contains the hash value supplied by the imageboard if applicable.
+
+        * ``spoiler``
+
+            Whether this file is 'spoilered', or the real thumbnail is not displayed, in place of a generic "spoilered" thumbnail. This may contain the value ``true`` or ``false``, and is optional if the key is ``false``.
+
+        * ``thumb_path``
+
+            This contains the name of the thumbnail file in the ``thumbs/`` directory.
+
+        * ``thumb``
+
+            This contains the width and height of the thumbnail for this file.
+
+        In addition, there are several mediatype-specific keys, as below:
+
+        * ``image``
+
+            This contains the width and height of the file, if it is an image file.
+
+        * ``duration``
+
+            This contains the duration, in seconds, of the file, if it is a music or video file. Note that this key is optional if the imageboard does not supply this information, but still recommended.
 
     * ``supplier``
 
@@ -328,33 +457,48 @@ A post object can contain the following keys:
 
     * ``content``
 
-        This key contains the content of this post in HTML format. This key is required.
+        This key contains the content of this post in BBCode format. This key is required.
 
-        Inter-board and links to other imageboards' threads are very transient – most of them not having a specified lifetime. The links to other threads on the same or on different image boards shall have their ``href`` attribute replaced with a ``chan:`` URI representing the same content. For instance, if a link in content originally points to ``http://boards.4chan.org/etc/thread/123234/something#263543``, it shall be replaced with the standardised ``chan://4chan/etc/123234#263543``. These are rewritten to valid URLs on creation of the ``index.html``. For exact specifications, please see the `chan URI Specification <chan-uri-spec.rst>`_.
+        Inter-board and links to other imageboards' threads are very transient – most of them not having a specified lifetime. The links to other threads on the same or on different image boards shall be replaced with a ``chan:`` URI representing the same content. For instance, if a link in content originally points to ``http://boards.4chan.org/etc/thread/123234/something#263543``, it shall be replaced with the standardised ``chan://4chan/etc/123234#263543``. These are rewritten to valid URLs on creation of the ``index.html``. For exact specifications, please see the `chan URI Specification <chan-uri-spec.rst>`_.
 
-        Because of the disjointed nature of the way imageboards implement things like greentext, spoilers, and URLs, there are some standard replacements that must be made below. This is to provide conformance between different imageboard post content, and so that we can affect posts from all imageboards with one single CSS style.
+        Because of the disjointed nature of the way imageboards implement things like greentext, spoilers, and URLs, there are some standard replacements that must be made below. This is to provide conformance between different imageboard post content.
+
+
+                    "content": "Look at this cool paper on archiving!\n[green][url=chan:4chan/etc/2534321]>>>2534321[/url] is also cool![/green]"
 
         * Italics/Bold
 
-            All tags that make the content text inside them italics/bold shall be replaced with the tags ``<emph></emph>`` and ``<strong></strong>`` respectively. If there is a tag that does both (such as a custom ``span`` tag), it shall be replaced with ``<emph><strong>`` and be closed with ``</strong></emph>``.
+            These shall be replaced with the standard BBCode tags ``[i][/i]`` and ``[b][/b]``.
 
         * Greentext
 
-            "Greentext", or text that is coloured green and generally starts the line with the character ``">"``, shall be represented with the tag ``<greentext></greentext>``. If there is a custom element (one that is not the ``<greentext>`` tag) whose style is to make the text inside the tag display as green, it shall be replaced with this tag.
+            "Greentext", or text that is coloured green and generally starts the line with the character ``">"``, shall be represented with the BBCode tag ``[green][/green]``.
 
         * Spoilered Text
 
-            Spoilered text is text whose background and foreground both appear black. When they are hovered over, the text turns lighter and shows what the message says. These spoilers can be nested. The standard tag to represent this is ``<spoiler></spoiler>``. If there is a custom element (one that is not the ``<spoiler>`` tag) whose style is to make the text inside the tag show as a spoiler, it shall be replaced with this tag.
+            Spoilered text is text whose background and foreground both appear black. When they are hovered over, the text turns lighter and shows what the message says. These spoilers can be nested. The standard tag to represent this is ``[spoiler][/spoiler]``.
 
         * Ban Messages
 
             Ban messages generally appear as all-red, bold, and sometimes in a slightly bigger font than the rest of the text. The typical message that appears as 'ban' text is as such: ``"(USER WAS BANNED FOR THIS POST)"``.
 
-            These messages shall be inside the tag ``<banned></banned>``. Any existing tags (span/div) to display ban text as such shall be replaced with this standard tag.
+            These messages shall be inside the tag ``[banned][/banned]``.
 
         * Internal post links
 
-            Links to other posts in the same thread (usually shown/performed as something like ``>>123123``) should be in the following HTML format: ``<a class="chan-quote-link" href="#p123234">&gt;&gt;123234</a>``, with the shown class name and href content as ``"p`` followed by the post ID, closed by ``"``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``<greentext>`` tag.
+            Links to other posts in the same thread (usually shown/performed as something like ``>>123123``) should be in the following format: ``[post=123234]>>123234[/post]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
+
+            The full example would be given as such: ``[green][post=123234]>>123234[/post] is cool[/green]``
+
+        * External thread links
+
+            Links to other threads (usually shown as something like ``>>>123123``) should be in the following format: ``[url=chan:4chan/etc/123231#123234]>>>123234[/url]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
+
+            The full example would be given as such: ``[green][url=chan:4chan/etc/123231#123234]>>>123234[/url] is cool[/green]``
+
+    * ``content_raw``
+
+        This key is optional and only recommended if the post content could not be cleanly or completely translated to BBCode format as above. It contains the raw HTML content of the post, with no processing performed.
 
     * ``references``
 
