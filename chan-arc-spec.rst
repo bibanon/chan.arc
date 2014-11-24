@@ -187,7 +187,7 @@ A typical ``thread.json`` file is laid out as such:
                         "thumb_path": "spoiler-etc.jpg",
                         "thumb": { "w": 0, "h": 0 }
                     }
-                ]
+                ],
                 "content": "Does anyone else enjoy imageboard archiving?"
             },
             "replies": [
@@ -216,8 +216,8 @@ A typical ``thread.json`` file is laid out as such:
                             "thumb_path": "1234583.jpg",
                             "thumb": { "w": 0, "h": 0 }
                         }
-                    ]
-                    "content": "Oh cool, another archivist!\n[green][post=1234568]>>1234568[\post] is just lame[/green]",
+                    ],
+                    "content": "Oh cool, another archivist!\n[green][post=1234568]>>1234568[/post] is just lame[/green]",
                     "references": [1234568]
                 },
                 {
@@ -234,15 +234,15 @@ A typical ``thread.json`` file is laid out as such:
                             "thumb_path": "type-pdf.jpg",
                             "thumb": { "w": 0, "h": 0 }
                         }
-                    ]
+                    ],
                     "file": "paper.pdf",
-                    "content": "Look at this cool paper on archiving!\n[green][url=chan:4chan/etc/2534321]>>>2534321[/url] is also cool![/green]"
-                    "deleted": true,
+                    "content": "Look at this cool paper on archiving!\n[green][url=chan:4chan/etc/2534321]>>>2534321[/url] is also cool![/green]",
+                    "deleted": true
                 },
                 {
                     "post_id": 1234626,
                     "poster": {
-                        "type": "moderator"
+                        "type": "moderator",
                         "name": "CoolDude",
                         "hash": "902gSgbY"
                     },
@@ -252,7 +252,7 @@ A typical ``thread.json`` file is laid out as such:
                     "post_id": 142,
                     "supplier": "archive.moe",
                     "poster": {
-                        "type": "ghost"
+                        "type": "ghost",
                         "name": "Anonymous",
                         "hash": "g3rTsvrS"
                     },
@@ -367,142 +367,142 @@ We try to obtain as much information as we can during archiving, because this is
 
 A post object can contain the following keys:
 
-    * ``poster``
+* ``poster``
 
-        This contains information about who made the post.
+    This contains information about who made the post.
 
-        * ``name``
+    * ``name``
 
-            This key contains the name of the poster, sans any tripcode.
+        This key contains the name of the poster, sans any tripcode.
 
-        * ``email``
+    * ``email``
 
-            This key contains what is in the ``email`` field of this post. This is a string and can contain any characters the original site supports in its name field. It is important to note that this may contain a string that is not a valid email address. This is by design, as some sites let users post with this in their email field.
+        This key contains what is in the ``email`` field of this post. This is a string and can contain any characters the original site supports in its name field. It is important to note that this may contain a string that is not a valid email address. This is by design, as some sites let users post with this in their email field.
 
-            This key is optional and not required if the poster has not set an email.
+        This key is optional and not required if the poster has not set an email.
 
-        * ``type``
+    * ``type``
 
-            This is a 'type' or a privilidge the poster has. The default allowed values for this string are as follows: ``["owner", "developer", "administrator", "moderator", "janitor", "ghost"]``.
+        This is a 'type' or a privilidge the poster has. The default allowed values for this string are as follows: ``["owner", "developer", "administrator", "moderator", "janitor", "ghost"]``.
 
-            Owner, Admin, Mod, and Janitor are fairly self-evident, mostly coming from the 4chan moderation system. Other values can be put into this key, but they will not be understood by most software and it is recommended to try and add them to the specification as an 'official' allowed value.
+        Owner, Admin, Mod, and Janitor are fairly self-evident, mostly coming from the 4chan moderation system. Other values can be put into this key, but they will not be understood by most software and it is recommended to try and add them to the specification as an 'official' allowed value.
 
-            Ghost represents that the given post has been added at a later supplier, and is not part of the thread from the original supplier.
+        Ghost represents that the given post has been added at a later supplier, and is not part of the thread from the original supplier.
 
-            This key is optional, if the poster has no special types to declare.
+        This key is optional, if the poster has no special types to declare.
 
-        * ``tripcode``
+    * ``tripcode``
 
-            This key contains what the ``tripcode`` of the topic post of the thread is displayed as. This may contain a standard tripcode or a secure tripcode, depending on what is supported by the original supplier and what the post contains. This is a string that can contain any characters necessary to represent the generated tripcode, but is expected to conform to standard tripcode formats. Leading and trailing whitespace should be stripped from this field.
+        This key contains what the ``tripcode`` of the topic post of the thread is displayed as. This may contain a standard tripcode or a secure tripcode, depending on what is supported by the original supplier and what the post contains. This is a string that can contain any characters necessary to represent the generated tripcode, but is expected to conform to standard tripcode formats. Leading and trailing whitespace should be stripped from this field.
 
-            This key is optional, if the poster has no tripcode.
+        This key is optional, if the poster has no tripcode.
 
-        * ``hash``
+    * ``hash``
 
-            This refers to imageboards that assign a specific hash-like ID to posters, usually based off their IP address or some other defining feature. This allows users to generally see who has made duplicate posts in a thread.
+        This refers to imageboards that assign a specific hash-like ID to posters, usually based off their IP address or some other defining feature. This allows users to generally see who has made duplicate posts in a thread.
 
-            This key is optional, and can contain any characters the original supplier supports.
+        This key is optional, and can contain any characters the original supplier supports.
 
-        * ``country``
+    * ``country``
 
-            Some imageboards allow users to declare themselves from a certain country, which puts a small flag next to their name.
+        Some imageboards allow users to declare themselves from a certain country, which puts a small flag next to their name.
 
-    * ``post_id``
+* ``post_id``
 
-        This key contains the identifier given to this post by the source image board. This may or may not be board-specific, depending on how the source imageboard specifies its post IDs.
+    This key contains the identifier given to this post by the source image board. This may or may not be board-specific, depending on how the source imageboard specifies its post IDs.
 
-    * ``file``
+* ``file``
 
-        This key contains a list of files attached to this post. It is a list because some imageboards support attaching multiple files to a single post. The keys in a 'file object' are listed below:
+    This key contains a list of files attached to this post. It is a list because some imageboards support attaching multiple files to a single post. The keys in a 'file object' are listed below:
 
-        * ``original_name``
+    * ``original_name``
 
-            This key contains the original name of the file, as reported by the imageboard. Note that the actual file itself in the ``files/`` directory should not be named this. This key is optional, if not known at archive time or if the imageboard does not support original names.
+        This key contains the original name of the file, as reported by the imageboard. Note that the actual file itself in the ``files/`` directory should not be named this. This key is optional, if not known at archive time or if the imageboard does not support original names.
 
-        * ``path``
+    * ``path``
 
-            This key contains the actual path of the image file, in the ``files/`` directory.
+        This key contains the actual path of the image file, in the ``files/`` directory.
 
-        * ``hash``
+    * ``hash``
 
-            Some imageboards also supply a 'hash' of the file. This key is optional, and contains the hash value supplied by the imageboard if applicable.
+        Some imageboards also supply a 'hash' of the file. This key is optional, and contains the hash value supplied by the imageboard if applicable.
 
-        * ``spoiler``
+    * ``spoiler``
 
-            Whether this file is 'spoilered', or the real thumbnail is not displayed, in place of a generic "spoilered" thumbnail. This may contain the value ``true`` or ``false``, and is optional if the key is ``false``.
+        Whether this file is 'spoilered', or the real thumbnail is not displayed, in place of a generic "spoilered" thumbnail. This may contain the value ``true`` or ``false``, and is optional if the key is ``false``.
 
-        * ``thumb_path``
+    * ``thumb_path``
 
-            This contains the name of the thumbnail file in the ``thumbs/`` directory.
+        This contains the name of the thumbnail file in the ``thumbs/`` directory.
 
-        * ``thumb``
+    * ``thumb``
 
-            This contains the width and height of the thumbnail for this file.
+        This contains the width and height of the thumbnail for this file.
 
-        In addition, there are several mediatype-specific keys, as below:
+    In addition, there are several mediatype-specific keys, as below:
 
-        * ``image``
+    * ``image``
 
-            This contains the width and height of the file, if it is an image file.
+        This contains the width and height of the file, if it is an image file.
 
-        * ``duration``
+    * ``duration``
 
-            This contains the duration, in seconds, of the file, if it is a music or video file. Note that this key is optional if the imageboard does not supply this information, but still recommended.
+        This contains the duration, in seconds, of the file, if it is a music or video file. Note that this key is optional if the imageboard does not supply this information, but still recommended.
 
-    * ``supplier``
+* ``supplier``
 
-        Some imageboard archives allow posting on their archived versions of threads, after the thread has been deleted from the source imageboard. For instance, after archiving a thread on ``archive.example``, that website may allow its users to post on the threads they have archived. This is often called 'ghost mode' or names similar.
+    Some imageboard archives allow posting on their archived versions of threads, after the thread has been deleted from the source imageboard. For instance, after archiving a thread on ``archive.example``, that website may allow its users to post on the threads they have archived. This is often called 'ghost mode' or names similar.
 
-        If a post has been added on/by a provider that is not the original source of the thread, this key shall contain the ``site`` identifier of where the post originated. (Site identifiers are specified above, in the ``manifest.json`` section)
+    If a post has been added on/by a provider that is not the original source of the thread, this key shall contain the ``site`` identifier of where the post originated. (Site identifiers are specified above, in the ``manifest.json`` section)
 
-    * ``content``
+* ``content``
 
-        This key contains the content of this post in BBCode format. This key is required.
+    This key contains the content of this post in BBCode format. This key is required.
 
-        Inter-board and links to other imageboards' threads are very transient – most of them not having a specified lifetime. The links to other threads on the same or on different image boards shall be replaced with a ``chan:`` URI representing the same content. For instance, if a link in content originally points to ``http://boards.4chan.org/etc/thread/123234/something#263543``, it shall be replaced with the standardised ``chan://4chan/etc/123234#263543``. These are rewritten to valid URLs on creation of the ``index.html``. For exact specifications, please see the `chan URI Specification <chan-uri-spec.rst>`_.
+    Inter-board and links to other imageboards' threads are very transient – most of them not having a specified lifetime. The links to other threads on the same or on different image boards shall be replaced with a ``chan:`` URI representing the same content. For instance, if a link in content originally points to ``http://boards.4chan.org/etc/thread/123234/something#263543``, it shall be replaced with the standardised ``chan://4chan/etc/123234#263543``. These are rewritten to valid URLs on creation of the ``index.html``. For exact specifications, please see the `chan URI Specification <chan-uri-spec.rst>`_.
 
-        Because of the disjointed nature of the way imageboards implement things like greentext, spoilers, and URLs, there are some standard replacements that must be made below. This is to provide conformance between different imageboard post content.
+    Because of the disjointed nature of the way imageboards implement things like greentext, spoilers, and URLs, there are some standard replacements that must be made below. This is to provide conformance between different imageboard post content.
 
 
-                    "content": "Look at this cool paper on archiving!\n[green][url=chan:4chan/etc/2534321]>>>2534321[/url] is also cool![/green]"
+                "content": "Look at this cool paper on archiving!\n[green][url=chan:4chan/etc/2534321]>>>2534321[/url] is also cool![/green]"
 
-        * Italics/Bold
+    * Italics/Bold
 
-            These shall be replaced with the standard BBCode tags ``[i][/i]`` and ``[b][/b]``.
+        These shall be replaced with the standard BBCode tags ``[i][/i]`` and ``[b][/b]``.
 
-        * Greentext
+    * Greentext
 
-            "Greentext", or text that is coloured green and generally starts the line with the character ``">"``, shall be represented with the BBCode tag ``[green][/green]``.
+        "Greentext", or text that is coloured green and generally starts the line with the character ``">"``, shall be represented with the BBCode tag ``[green][/green]``.
 
-        * Spoilered Text
+    * Spoilered Text
 
-            Spoilered text is text whose background and foreground both appear black. When they are hovered over, the text turns lighter and shows what the message says. These spoilers can be nested. The standard tag to represent this is ``[spoiler][/spoiler]``.
+        Spoilered text is text whose background and foreground both appear black. When they are hovered over, the text turns lighter and shows what the message says. These spoilers can be nested. The standard tag to represent this is ``[spoiler][/spoiler]``.
 
-        * Ban Messages
+    * Ban Messages
 
-            Ban messages generally appear as all-red, bold, and sometimes in a slightly bigger font than the rest of the text. The typical message that appears as 'ban' text is as such: ``"(USER WAS BANNED FOR THIS POST)"``.
+        Ban messages generally appear as all-red, bold, and sometimes in a slightly bigger font than the rest of the text. The typical message that appears as 'ban' text is as such: ``"(USER WAS BANNED FOR THIS POST)"``.
 
-            These messages shall be inside the tag ``[banned][/banned]``.
+        These messages shall be inside the tag ``[banned][/banned]``.
 
-        * Internal post links
+    * Internal post links
 
-            Links to other posts in the same thread (usually shown/performed as something like ``>>123123``) should be in the following format: ``[post=123234]>>123234[/post]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
+        Links to other posts in the same thread (usually shown/performed as something like ``>>123123``) should be in the following format: ``[post=123234]>>123234[/post]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
 
-            The full example would be given as such: ``[green][post=123234]>>123234[/post] is cool[/green]``
+        The full example would be given as such: ``[green][post=123234]>>123234[/post] is cool[/green]``
 
-        * External thread links
+    * External thread links
 
-            Links to other threads (usually shown as something like ``>>>123123``) should be in the following format: ``[url=chan:4chan/etc/123231#123234]>>>123234[/url]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
+        Links to other threads (usually shown as something like ``>>>123123``) should be in the following format: ``[url=chan:4chan/etc/123231#123234]>>>123234[/url]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
 
-            The full example would be given as such: ``[green][url=chan:4chan/etc/123231#123234]>>>123234[/url] is cool[/green]``
+        The full example would be given as such: ``[green][url=chan:4chan/etc/123231#123234]>>>123234[/url] is cool[/green]``
 
-    * ``content_raw``
+* ``content_raw``
 
-        This key is optional and only recommended if the post content could not be cleanly or completely translated to BBCode format as above. It contains the raw HTML content of the post, with no processing performed.
+    This key is optional and only recommended if the post content could not be cleanly or completely translated to BBCode format as above. It contains the raw HTML content of the post, with no processing performed.
 
-    * ``references``
+* ``references``
 
-        This shows which other posts this post references. This is normally captured as an internal ``>>123234`` style link in the content.
+    This shows which other posts this post references. This is normally captured as an internal ``>>123234`` style link in the content.
 
 files/
 ^^^^^^
