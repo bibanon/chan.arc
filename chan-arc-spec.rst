@@ -484,6 +484,22 @@ A post object can contain the following keys:
 
         These messages shall be inside the tag ``[banned][/banned]``.
 
+    * Code Blocks
+
+        Some imageboards allow users to post blocks of code. These appear as monospace text, sometimes with color highlighting. These should appear inside the tag ``[code][/code]``.
+
+    * Sub / Sup
+
+        Some imageboards also allow sub/sup text. These should appear in the standard tags ``[sub][/sub]`` and `[sup][/sup]``, respectively.
+
+    * Over / Underline
+
+        Some imageboards support over and underlining of text. This should appear in the standard tags ``[o][/o]`` and [u][/u]``, respectively.
+
+    * Strikethrough
+
+        Some imageboards support strikethrough of text. This should appear in the standard tag ``[s][/s]``.
+
     * Internal post links
 
         Links to other posts in the same thread (usually shown/performed as something like ``>>123123``) should be in the following format: ``[post=123234]>>123234[/post]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
