@@ -500,6 +500,10 @@ A post object can contain the following keys:
 
         Some imageboards support strikethrough of text. This should appear in the standard tag ``[s][/s]``.
 
+    * 'Expert'
+
+        Expert is a strange tag, and only some image boards support it. Essentially, it means overline and underline at the same time, and should appear in the tag ``[EXPERT][/EXPERT]``.
+
     * Internal post links
 
         Links to other posts in the same thread (usually shown/performed as something like ``>>123123``) should be in the following format: ``[post=123234]>>123234[/post]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
@@ -511,6 +515,10 @@ A post object can contain the following keys:
         Links to other threads (usually shown as something like ``>>>123123``) should be in the following format: ``[url=chan:4chan/etc/123231#123234]>>>123234[/url]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
 
         The full example would be given as such: ``[green][url=chan:4chan/etc/123231#123234]>>>123234[/url] is cool[/green]``
+
+    * Raw HTML
+
+        Sometimes there won't be a way to accurately represent the content of a post in BBCode. This can include when an admin screws with the board and writes some raw HTML, or other things like that. This can appear inside the tag ``[raw][/raw]``. If this happens, however, it is recommended to both put the whole post content in the ``content_raw`` key below, and to try and get tags added to this specification to describe that HTML.
 
 * ``content_raw``
 
