@@ -7,9 +7,9 @@ This specification is in ``draft`` status and **is by no means final**. It is st
 
 Abstract
 --------
-This document specifies the ``chan.arc`` file extension. This format is designed to provide a simple, standard way to represent and transport archives of imageboard threads.
+This document specifies the ``chan.arc`` file extension. This format is designed to provide a simple, standard way to transport archives of imageboard threads. For instance, threads that have been archived using Fuuka-like software.
 
-This format has been created primarily for 4chan threads, but aims to cleanly store threads from other decently compatible image boards (as well as from other imageboard archives themselves).
+This is not a replacement for the WARC (Web ARChive) file format, and WARC is the recommended format for archiving web content such as image board threads.
 
 Status of This Document
 -----------------------
@@ -21,13 +21,13 @@ Introduction
 ------------
 Image boards have proved themselves important parts in the creation of internet culture. However, some of the primary image boards in use today have been founded on ephemerality. This leaves the job of archiving and saving content to third parties or to the users themselves.
 
-Many completely seperate methods of archiving image board threads have been developed, from a user simply going to "Save Page" in their browser to complex scripts and programs designed for backing up content. Because each of these is independently developed, there has not been a standard way to browse or to transfer thread backups from one system to another.
+Most third-party archives in existence today use proprietary formats and folder structures to save thread information, which leads to problems when archive data needs to be transferred between systems and between various archives. As well, every home tool creates and uses its own personal folder structure and format for downloading threads, saving varying amounts of information with each tool.
 
-With ``chan.arc``, we hope to create a standard way to store and archive image board thread content. With a standard format, we hope to be able to seamlessly transfer thread information between different archives, give tools that want to analyse and look at imageboard threads a standard format to be able to parse and look through, and give users a filetype that lets them store the thread content and the metadata surrounding it for the future!
+The recommended way to archive new threads is using the WARC file format. This allows for the lowest amount of information loss and for presentation of the thread in exactly the way it looked at the time of access.
 
-Because of the historical importance of this data, we should have a standard format we can use and look back on in some years' time. Something that won't just be lost or unimportable if we can't setup and run the archival software anymore or if a database layout changes.
+WARC files should be created and used by archives so that information can be preserved exactly as it was, without the information loss encountered in the creation of formats that are designed to information from the original page, such as ``chan.arc``.
 
-The most important thing to store, in our eyes, is the user-generated content – what the users have themselves posted inside threads. The specific stylings and layout of the specific imageboard itself are less important, which is why our standard (required) information files place more focus on the content and posts themselves than the page layout, structure, or theme/design of the specific imageboard. However, direct grabs of these files can be downloaded and stored in ``WARC`` files in the provided ``warc/`` folder.
+``chan.arc`` is designed to be used for threads that have either already been archived without a direct WARC grab (in the case of threads from Fuuka-based archivers, where direct grabs of files are not kept in favor of extracting/reading information and storing it in a database) where the only information left cannot be represented in any other format, or in addition to WARC grabs. Doing both in unison allows for the information-based and searchable archives (such as `archive.moe <http://archive.moe/>`_) to flourish, while also being able to archive threads exactly as they exist with zero information loss.
 
 Version Strings
 ---------------
@@ -53,7 +53,7 @@ Both specifications are based around JSON files for interchanging information, a
 
 * For the ``0.x`` versions, each minor version number should be assumed to have major changes and breakages (eg: some of the JSON keys that existed in ``0.2`` may not exist in ``0.3``. This is to be able to rapidly introduce new features and get a decent set of features worked out before a 'production' release. When this standard reaches a sufficient level of stability, the major version number will be upgraded from 0 to 1, and the rules above will apply.
 
-The reasoning for such is this: If I have a chan.arc reader that natively supports ``"1.0"``, and it opens a file of version ``"1.2"``, it should be able to find all the keys it expects and be able to parse and read information from the new chan.arc file with relative parity compared to ones of the old ``"1.0"`` format.
+The reasoning for such is this: If a program natively supports ``chan.arc 1.0``, and it opens a file of version ``1.2``, it should be able to find all the keys it expects and be able to parse and read information from the newer-versioned chan.arc file with relative parity to ones it expects of ``1.0`` format.
 
 Status
 ^^^^^^
@@ -81,7 +81,7 @@ The ``.arc`` part of the standard name refers to a compression format. The two s
 
 * ``zip``
 
-    This format refers to PKZIP, the standard compression format for Windows-based systems. While this format has not proven itself the absolute best for compression's sake, there is a large ecosystem of tools and libraries already familiar with this format, and it is quite simple to decompress and extract files from this. Archives compressed with this format shall have the file extension ``chan.zip``.
+    This format refers to PKZIP, the standard compression format for Windows-based systems. There is a large ecosystem of tools and libraries already familiar with this format, and it is quite simple to decompress and extract files from this. Archives compressed with this format shall have the file extension ``chan.zip``.
 
 Other compression formats may be used if required, but this is not recommended as most software will not be able to open them.
 
@@ -104,22 +104,14 @@ This is a reference example of an archived thread::
         /23484.mp3
 
     /index.html
-    /template
-        /template.css
-        /template.js
-        /template.png
-
     /resources
         /banner_etc.jpg
         /favicon.png
-        /index.html
         /css
             /embedded_file_a.css
             /embedded_file_b.css
         /embedded_file.js
-    /warc
-        warc_01.warc.gz
-        warc_01.cdx
+
     /raw
         api.json
         raw_file_a.ext
@@ -236,7 +228,7 @@ A typical ``thread.json`` file is laid out as such:
                         }
                     ],
                     "file": "paper.pdf",
-                    "content": "Look at this cool paper on archiving!\n[green][url=chan:4chan/etc/2534321]>>>2534321[/url] is also cool![/green]",
+                    "content": "Look at this cool paper on archiving!\n[green][url=http://boards.4chan.org/etc/2534321]>>>2534321[/url] is also cool![/green]",
                     "deleted": true
                 },
                 {
@@ -459,8 +451,6 @@ A post object can contain the following keys:
 
     This key contains the content of this post in BBCode format. This key is required.
 
-    Inter-board and links to other imageboards' threads are very transient – most of them not having a specified lifetime. The links to other threads on the same or on different image boards shall be replaced with a ``chan:`` URI representing the same content. For instance, if a link in content originally points to ``http://boards.4chan.org/etc/thread/123234/something#263543``, it shall be replaced with the standardised ``chan://4chan/etc/123234#263543``. These are rewritten to valid URLs on creation of the ``index.html``. For exact specifications, please see the `chan URI Specification <chan-uri-spec.rst>`_.
-
     Because of the disjointed nature of the way imageboards implement things like greentext, spoilers, and URLs, there are some standard replacements that must be made below. This is to provide conformance between different imageboard post content.
 
 
@@ -512,9 +502,9 @@ A post object can contain the following keys:
 
     * External thread links
 
-        Links to other threads (usually shown as something like ``>>>123123``) should be in the following format: ``[url=chan:4chan/etc/123231#123234]>>>123234[/url]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
+        Links to other threads (usually shown as something like ``>>>123123``) should be in the following format: ``[url=http://boards.4chan.org/etc/123231#123234]>>>123234[/url]``. If the link is shown as green in an unhovered state on the original website, it should be inside a ``[green]`` tag.
 
-        The full example would be given as such: ``[green][url=chan:4chan/etc/123231#123234]>>>123234[/url] is cool[/green]``
+        The full example would be given as such: ``[green][url=http://boards.4chan.org/etc/123231#123234]>>>123234[/url] is cool[/green]``
 
     * Raw HTML
 
@@ -522,7 +512,7 @@ A post object can contain the following keys:
 
 * ``content_raw``
 
-    This key is optional and only recommended if the post content could not be cleanly or completely translated to BBCode format as above. It contains the raw HTML content of the post, with no processing performed.
+    This key is optional. It MUST be included if the post content could not be cleanly or completely translated to BBCode format as above and if the raw post content is available at creation time. It contains the raw HTML content of the post, with no processing performed.
 
 * ``references``
 
@@ -530,11 +520,9 @@ A post object can contain the following keys:
 
 files/
 ^^^^^^
-This folder contains the original files posted in the thread (on most imageboards, these are images). This folder may be excluded, but this is not recommended as it reduces the archive's value.
+This folder contains the original files posted in the thread (on most imageboards, these are images). This folder may be excluded, but this is not recommended as it greatly reduces the archive's value.
 
-Files in this folder will be named from the post ID followed by the file extension of the image, or of the form ``postid-filenumber.ext`` if there are multiple files attached to a single post, unless they are special files as described below.
-
-If there are special post files, an example being board or imageboard-specific spoiler files that are linked in the thread, they may be named ``spoiler.ext``, ``spoiler-something.ext``, or whatever best represents the file. They must be put these in this folder if a post object in ``posts.json`` will refer to these in their ``image`` key.
+Files in this folder can be named either by the original file name (as reported by the supplier), the post ID followed by the file extension, or whatever other name is deemed necessary.
 
 Keep in mind that the files attached to posts are not restricted to image content. Some image boards let users attach files of other formats such as ``webm``, ``pdf``, ``mp3`` to their posts, and these may exist in this folder as well.
 
@@ -542,29 +530,20 @@ thumbs/
 ^^^^^^^
 This folder contains the original thumbnails posted in the thread. This folder must be included if possible.
 
-Images in this folder will be named by the post ID followed by the file extension of the image, or of the form ``postid-filenumber.ext`` if there are multiple files attached to a single post, unless they are special files as described below.
-
-However, if there are special thumbnails, such as board or imageboard-specific spoiler thumbs that are linked in the thread, they may be named ``spoiler.ext``, ``spoiler-something.ext``, or whatever best represents the file. They must be put these in this folder if a post object in ``posts.json`` will refer to these in their ``thumb`` key.
+Images in this folder can be named either by the original file name (as reported by the supplier), the post ID followed by the file extension, or whatever other name is deemed necessary.
 
 
 index.html
 ^^^^^^^^^^
-This is a purely human-readable file. It is created at archive time, and is essentially a file users can double-click on and view the thread that has been archived. This should be statically generated by the chan.arc library being used, from ``manifest.json`` and ``posts.json``, using standard templates.
+This is a purely human-readable file. It is created at archive time, and is essentially a file users can double-click on and view the thread that has been archived.
 
-If generating a html file is not possible, this may be a download of the original imageboard's html with the required file, thumbnail and resource urls changed. How ``index.html`` is generated will affect which files will be put under the ``resources/`` folder at archive time.
+Typically, this is a download of the original imageboard's html with the required file, thumbnail and resource urls changed. If this is not possible, index.html may also be generated at archive creation time by a template or something similar.
 
 resources/
 ^^^^^^^^^^
-This folder contains resources linked by the ``index.html`` file. This folder may have subdirectories. It is only recommended to create subdirectories if the created folder will have more than a single file. The recommended subdirectories include ``css``, ``js``, and ``images``. If the favicon is a single file, it should be put in the root ``resources/`` directory as shown. If there are multiple favicon files, they should be put in a ``resources/favicons/`` folder.
+This folder contains resources linked by the ``index.html`` file. This folder may have subdirectories.
 
-If the ``index.html`` file is generated by the ``chan.arc`` library, using the template in this repo's ``templates/`` folder, the resources folder inside there should be copied to here at archive time, when the ``index.html`` file is generated.
-
-If the ``index.html`` file is a 'grab' directly from the image board with URLs replaced, the required page resources should be put inside this folder, following the above recommendations.
-
-
-warc/
-^^^^^
-This folder is for storing files in the Web ARChive file format. These files may take any file name deemed appropriate, depending on how the archiver downloads and stores these files. Storing WARC files allow external archives such as the `Wayback Machine <http://archive.org/web/>`_ to import thread information and allow users to browse the thread exactly as it existed at archive time. Users may download and store ``.warc`` grabs of the thread HTML directly from the source, as well as other resources that are linked on that page.
+The file names and paths may be in any format.
 
 raw/
 ^^^^
@@ -580,4 +559,4 @@ Whenever creating a format like this, assumptions must be made. If these are inv
 
 * Post IDs and Thread IDs will always be integers.
 
-    I haven't yet seen an imageboard that uses something other than integers for post and thread IDs. I consider it a fairly core part of being an imageboard. If this is invalidated, the ``chan`` URI specification will also need to be updated
+    I haven't yet seen an imageboard that uses something other than integers for post and thread IDs. I consider it a fairly core part of being an imageboard.

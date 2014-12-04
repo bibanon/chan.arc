@@ -14,7 +14,7 @@ VERSION = 'draft-01'
 
 
 class ChanArc(object):
-    """Creates a chan.arc."""
+    """Creates an imageboard archive file."""
     def __init__(self, base_path, manifest):
         self.base_path = base_path
         self.manifest = manifest
@@ -22,7 +22,7 @@ class ChanArc(object):
 
 
 class ChanArcManifest(object):
-    """Creates a chan.arc style manifest."""
+    """Creates a chan.arc manifest."""
     def __init__(self):
         self.version = VERSION
 

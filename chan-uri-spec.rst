@@ -5,6 +5,10 @@ Unfinished Spec
 ---------------
 This specification is in ``draft`` status and **is by no means final**. It is still being written and drafted. Please expect things to change, as per the Version Strings section in the ``chan.arc`` specs.
 
+**Please Note**
+
+Work on this specification has been halted, as we reposition the ``chan.arc`` specification to be friendlier towards general archiving efforts. While this might be useful sometime in the future, I don't think it's necessary at this point. I think the Supplier ID Registry should give us everything we need without needing to create an entirely new specification, because creating new specs for the sake of new specs is just silly.
+
 Abstract
 --------
 This document specifies the ``chan`` URI. This URI is designed to provide a simple, standard way to represent different imageboards, and represent the boards and threads on them.
