@@ -4,6 +4,8 @@ Imageboard thread archives come in a multitude of different formats: Plain WARC 
 
 This is an attempt to standardize a file format that can be used to archive and store threads from image boards. This should make it easier to create tools that create, import, export, and analyse thread archives.
 
+And a particularly exciting possibility is that the chan.arc standard, utilizing JSON files from the 4chan API, can be combined with JSON-file NoSQL databases (such as CouchDB or MongoDB) to make fast, efficient, and portable file database.
+
 Why a new standard?
 -------------------
 So we can all be talking the same language!
