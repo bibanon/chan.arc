@@ -98,7 +98,8 @@ This lays out the standard folder structure of an archived thread. The specific 
 
 This is a reference example of an archived thread::
 
-First, a top level folder structure with ``4chan/<board>/<thread>`` is used to separate multiple threads from various different boards. Within each <thread> folder is the following:
+First, a top level folder structure with ``4chan/<board>/<thread>`` is used to separate multiple threads from various different boards. Within each <thread> folder is the following:::
+
 
     /thread.json
     /thumbs
