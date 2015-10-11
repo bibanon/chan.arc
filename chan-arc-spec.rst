@@ -11,6 +11,8 @@ This document specifies the ``chan.arc`` file extension. This format is designed
 
 This is not a replacement for the WARC (Web ARChive) file format, and WARC is the recommended format for archiving web content such as image board threads.
 
+The ``chan.arc`` specification is designed to be an export/import format for 4chan archives. `chan.arc` is meant to be an intermediate format that converts Static HTML dumps for import by archivers: since these dumps have lost all HTTP Headers anyway, or never had them (if exported by an archiver).
+
 Status of This Document
 -----------------------
 This is an early draft specification, and is **not yet recommended for production use**.
@@ -85,11 +87,18 @@ The ``.arc`` part of the standard name refers to a compression format. The two s
 
 Other compression formats may be used if required, but this is not recommended as most software will not be able to open them.
 
+Filename Structure
+------------------
+
+An example of a ``chan.arc`` filename is ``<filename>.chan.7z`` Notice that the filename can be set to anything by the user, as it is possible that there are multiple threads in a ``chan.arc``. The contents of the ``chan.arc`` itself are used to index, not the container filename.
+
 Folder and File Structure
 -------------------------
 This lays out the standard folder structure of an archived thread. The specific files and folders are described in-detail below.
 
 This is a reference example of an archived thread::
+
+First, a top level folder structure with ``4chan/<board>/<thread>`` is used to separate multiple threads from various different boards. Within each <thread> folder is the following:
 
     /thread.json
     /thumbs
